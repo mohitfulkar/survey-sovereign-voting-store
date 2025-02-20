@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getPollById,
   getPollItems,
-} from "../../app/features/panelist/pollSlice.js";
+} from "../../app/features/poll/pollSlice.js";
+import { toast } from "react-toastify";
 
 const Demo = () => {
   const pollId = "671c8713375967e31734b23c";
   const dispatch = useDispatch();
-  const { pollItems, pollItem, loading, error } = useSelector(
+  const { pollItems, pollItem, loading, error, success } = useSelector(
     (state) => state.poll
   );
   console.log("pollItems", pollItems);
