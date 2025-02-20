@@ -6,10 +6,9 @@ export const tokenService = {
         const decodedToken = JSON.parse(atob(token.split(".")[1]));
 
         // Extract email, userType, and id
-        const { email, user_type, id } = decodedToken;
+        const { email, id } = decodedToken;
         return {
           email,
-          user_type,
           id,
         };
       } catch (error) {

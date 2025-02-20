@@ -2,7 +2,7 @@ export const handleAsyncAction = (
   builder,
   action,
   stateKey,
-  additionState = null
+  tokenState = null
 ) => {
   builder
     .addCase(action.pending, (state) => {
@@ -12,10 +12,10 @@ export const handleAsyncAction = (
     })
     .addCase(action.fulfilled, (state, action) => {
       state.loading = false;
-      state[stateKey] = action.payload; // Dynamically set the state using the stateKey
+      state[stateKey] = action.payload; // Dynamically update state
       state.success = true;
-      if (additionState) {
-        state[additionState] = action.payload.token; // Set additional state
+      if (tokenState) {
+        state[tokenState] = action.payload.token; // Set additional state
       }
     })
     .addCase(action.rejected, (state, action) => {

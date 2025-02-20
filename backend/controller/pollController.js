@@ -1,13 +1,23 @@
 import Poll from "../model/Poll.js";
 import "dotenv/config"; // Load environment variables from .env file
+import { commanService } from "../services/commanService.js";
 
 export const getPollItems = async (req, res) => {
   try {
-    const polls = await Poll.find();
+    const items = await commanService.getItems(Poll);
 
-    res.status(200).json(polls);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching polls from the database" });
+    res.status(200).json({
+      success: true,
+      data: items,
+    });
+  } catch (err) {
+    console.error("Error fetching items:", err);
+    // Return an error response in case of failure
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while fetching items.",
+      error: err.message,
+    });
   }
 };
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { loginFields } from "../../constants/form";
 import { commonClasses } from "../../constants/styleClass";
 import { login } from "../../app/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { tokenService } from "../../service/tokenService";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,12 +24,15 @@ const Login = () => {
     e.preventDefault();
     dispatch(login(formData));
   };
+
   useEffect(() => {
     if (success) {
       toast.success("User Login Successfully!");
       if (token) {
         localStorage.setItem("token", token);
       }
+      const userId = tokenService.extractItems(token).id;
+      navigate(`/user/${userId}`);
     }
     if (error) {
       toast.error("Something went wrong");
