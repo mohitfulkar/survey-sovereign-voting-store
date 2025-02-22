@@ -1,0 +1,28 @@
+.menu-item {
+  height: 3rem;
+  display: flex;
+  /* justify-content: center;  */
+  align-items: center;
+  cursor: pointer;
+  font-family: "Nunito", serif;
+  font-optical-sizing: auto;
+
+  font-style: normal;
+}
+.menu-item:hover {
+  background-color: rgb(216, 216, 216);
+}
+
+/* UserDrawer Styles */
+.drawer {
+  width: 13rem;
+  height: 100vh;
+  background-color: #f3f4f6; /* Light gray background */
+  position: fixed;
+  transform: translateX(-100%); /* Start off-screen to the left */
+  transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+
+.drawer.open {
+  transform: translateX(0); /* Slide into view */
+}
