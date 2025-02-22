@@ -5,26 +5,21 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import "../../constants/style.css";
 
 const UserLanding = () => {
-  const [isVisible, setIsVisible] = useState(true); // Track visibility of UserDrawer
-
-  const handleIsVisible = () => {
-    setIsVisible(!isVisible);
-  };
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <>
       <UserNavbar />
-
-      {/* Hamburger Menu Button */}
       <div className="relative">
         <RxHamburgerMenu
-          onClick={handleIsVisible}
-          className="w-[3rem] cursor-pointer z-10 pt-2 h-8" // Hamburger icon stays above everything else
+          onClick={() => setIsVisible(!isVisible)}
+          className="w-[3rem] cursor-pointer z-10 pt-2 h-8" 
         />
-
-        {/* Sidebar, position it above the button */}
         <div className="absolute top-0 left-0 z-20">
-          <UserDrawer isVisible={isVisible} setIsVisible={setIsVisible} />
+          <UserDrawer
+            isVisible={isVisible}
+            setIsVisible={() => setIsVisible(!isVisible)}
+          />
         </div>
       </div>
     </>

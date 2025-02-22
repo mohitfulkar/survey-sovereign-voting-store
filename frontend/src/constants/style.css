@@ -26,3 +26,8 @@
 .drawer.open {
   transform: translateX(0); /* Slide into view */
 }
+.p {
+  font-family: "Nunito", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
