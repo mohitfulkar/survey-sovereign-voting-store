@@ -45,7 +45,7 @@ const UserDrawer = ({ isVisible, setIsVisible }) => {
         <ul className="flex flex-col space-y-8">
           {menuItems.map(({ label, icon, route }) => (
             <li key={label} className="">
-              <Link to={route} className="menu-item space-x-2 pl-3">
+              <Link to={route} className="menu-item space-x-2 pl-10">
                 {icon}
                 <p className="p">{label}</p>
               </Link>

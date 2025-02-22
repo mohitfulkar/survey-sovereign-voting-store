@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getUserById } from "../../app/features/user/userSlices.js";
 import { useDispatch, useSelector } from "react-redux";
+import "../../constants/style.css";
 
 const UserNavbar = () => {
   const { user, loading, error, lastFetched } = useSelector(
@@ -15,14 +16,13 @@ const UserNavbar = () => {
   // Check if the data is already available in the store and not stale
   const isDataAvailable = user && user.data;
   console.log("isDataAvailable", isDataAvailable);
-  const isDataStale = !lastFetched || Date.now() - lastFetched > 60000; // 1-minute cache
 
   // Fetch user data only if it's not available or stale
   useEffect(() => {
-    if (id && (!isDataAvailable || isDataStale)) {
+    if (id && !isDataAvailable) {
       dispatch(getUserById(id));
     }
-  }, [dispatch, id, isDataAvailable, isDataStale]);
+  }, [dispatch, id, isDataAvailable]);
 
   // Loading state check
   if (loading) {
@@ -47,7 +47,7 @@ const UserNavbar = () => {
   };
 
   return (
-    <nav className="bg-blue-600 p-5 shadow-lg flex justify-between items-center">
+    <div className="p bg-blue-600 p-5 shadow-lg flex justify-between items-center">
       {/* Logo or Brand Name */}
       <Link to="/" className="text-white text-2xl font-bold">
         ReliefConnect
@@ -63,7 +63,7 @@ const UserNavbar = () => {
           </button>
         </div>
       </div>
-    </nav>
+    </div>
   );
 };
 
