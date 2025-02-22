@@ -42,7 +42,7 @@ const UserNavbar = () => {
   const handleAction = (action) => {
     if (action === "logout") {
       localStorage.removeItem("token");
-      navigate("/login");
+      navigate("/");
     }
   };
 

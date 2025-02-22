@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SignUp from "./pages/user/SignUp";
 import Login from "./pages/user/Login";
 import UserLanding from "./pages/user/UserLanding";
+import Landing from "./pages/Landing";
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
           pauseOnHover
         />
         <Routes>
-          <Route path="/" element={<SignUp />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<SignUp />} />
           <Route path="/user/:id" element={<UserLanding />} />
