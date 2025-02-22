@@ -5,19 +5,24 @@ import { getUserById } from "../../app/features/user/userSlices.js";
 import { useDispatch, useSelector } from "react-redux";
 
 const UserNavbar = () => {
-  const { user, loading, success, error } = useSelector(
+  const { user, loading, error, lastFetched } = useSelector(
     (state) => state.user || {}
   ); // Ensure that we're accessing state correctly.
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // Fetch user data when the component mounts or when the ID changes
+  // Check if the data is already available in the store and not stale
+  const isDataAvailable = user && user.data;
+  console.log("isDataAvailable", isDataAvailable);
+  const isDataStale = !lastFetched || Date.now() - lastFetched > 60000; // 1-minute cache
+
+  // Fetch user data only if it's not available or stale
   useEffect(() => {
-    if (id) {
+    if (id && (!isDataAvailable || isDataStale)) {
       dispatch(getUserById(id));
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, isDataAvailable, isDataStale]);
 
   // Loading state check
   if (loading) {
@@ -47,7 +52,6 @@ const UserNavbar = () => {
       <Link to="/" className="text-white text-2xl font-bold">
         ReliefConnect
       </Link>
-
       <div className="flex items-center space-x-6">
         <div className="flex items-center space-x-4">
           <span className="text-white font-medium">{`Hi, ${fullName}`}</span>
