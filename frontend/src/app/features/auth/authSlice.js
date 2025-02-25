@@ -28,7 +28,17 @@ export const login = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const data = await authService.loginUser(payload);
-      console.log("data", data);
+      return data; // On success, return the response
+    } catch (error) {
+      return rejectWithValue(error.message); // On error, return the error message
+    }
+  }
+);
+export const panelistLogin = createAsyncThunk(
+  "auth/panelistLogin",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const data = await authService.loginPanelist(payload);
       return data; // On success, return the response
     } catch (error) {
       return rejectWithValue(error.message); // On error, return the error message
@@ -51,7 +61,8 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     // Handling async actions using the custom helper function
     handleAsyncAction(builder, register, "auth"); // Use "auth" instead of "pollItems"
-    handleAsyncAction(builder, login, "auth",'token'); // Use "auth" instead of "pollItem"
+    handleAsyncAction(builder, login, "auth", "token"); // Use "auth" instead of "pollItem"
+    handleAsyncAction(builder, panelistLogin, "auth", "token"); // Use "auth" instead of "pollItem"
   },
 });
 

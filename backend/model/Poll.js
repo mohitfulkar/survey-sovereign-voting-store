@@ -19,13 +19,19 @@ const PollSchema = new mongoose.Schema({
       voteCount: { type: Number, default: 0 },
     },
   ],
-
   status: {
     type: String,
     enum: ["pending", "accepted", "rejected"],
     default: "pending",
   },
-
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User", // Assuming "User" is the model for users
+    required: true,
+  },
+  created_by_name: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

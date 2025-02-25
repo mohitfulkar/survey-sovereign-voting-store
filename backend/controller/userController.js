@@ -37,7 +37,7 @@ export const getItemById = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "User fetched successfully",
-      data: items,
+      ...items,
     });
   } catch (err) {
     console.error("Error fetching items:", err);

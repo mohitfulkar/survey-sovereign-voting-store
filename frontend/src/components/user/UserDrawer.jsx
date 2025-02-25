@@ -1,41 +1,15 @@
 import React from "react";
 import "../../constants/style.css";
-import { FaRegNewspaper } from "react-icons/fa";
-import { MdOutlineFeedback } from "react-icons/md";
-import { RiBloggerLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
 
-const menuItems = [
-  {
-    label: "Panelists",
-    icon: <FaRegNewspaper />,
-    route: "/panelists",
-  },
-  {
-    label: "News",
-    icon: <FaRegNewspaper />,
-    route: "/news",
-  },
-  {
-    label: "Feedback",
-    icon: <MdOutlineFeedback />,
-    route: "/feedback",
-  },
-  {
-    label: "Blogs",
-    icon: <RiBloggerLine />,
-    route: "/blogs",
-  },
-];
-
-const UserDrawer = ({ isVisible, setIsVisible }) => {
+const UserDrawer = ({ isVisible, setIsVisible, menuItems }) => {
   return (
     <div className={`drawer ${isVisible ? "open" : ""}`}>
       {/* Cross Icon Container */}
       <div className="flex justify-end p-2">
         <RxCross1
-          className="cursor-pointer"
+          className="cursor-pointer pt-2 text-3xl mr-1"
           onClick={() => setIsVisible(false)}
         />
       </div>

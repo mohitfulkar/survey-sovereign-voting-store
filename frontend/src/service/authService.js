@@ -21,4 +21,12 @@ export const authService = {
       throw new Error(error.response?.data || "Login failed");
     }
   },
+  loginPanelist: async (payload) => {
+    try {
+      const response = await axios.post(`${baseUrl}/panelist/login`, payload); // Your login endpoint
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data || "Login failed");
+    }
+  },
 };
