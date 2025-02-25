@@ -1,42 +1,45 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getUserById } from "../../app/features/user/userSlices.js";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserById } from "../../app/features/user/userSlices.js";
+import { getPanelistsById } from "../../app/features/panelist/panelistSlices.js";
 import "../../constants/style.css";
 
-const UserNavbar = () => {
-  const { user, loading, error, lastFetched } = useSelector(
-    (state) => state.user || {}
-  ); // Ensure that we're accessing state correctly.
+const UserNavbar = ({ user_type }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // Check if the data is already available in the store and not stale
-  const isDataAvailable = user && user.data;
-  console.log("isDataAvailable", isDataAvailable);
+  const { user } = useSelector((state) => state.user || {});
+  const { panelist } = useSelector((state) => state.panelist || {});
 
-  // Fetch user data only if it's not available or stale
-  useEffect(() => {
-    if (id && !isDataAvailable) {
-      dispatch(getUserById(id));
-    }
-  }, [dispatch, id, isDataAvailable]);
-
-  // Loading state check
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  const [isDataAvailable, setIsDataAvailable] = useState(false);
 
   let fullName = "Guest";
-  if (user && user.data) {
-    const { fname, lname } = user.data;
-    fullName = `${fname} ${lname}`;
+
+  useEffect(() => {
+    if (id && !isDataAvailable) {
+      if (user_type === "user") {
+        dispatch(getUserById(id));
+      } else if (user_type === "panelist") {
+        dispatch(getPanelistsById(id));
+      }
+    }
+  }, [dispatch, id, isDataAvailable, user_type]);
+
+  useEffect(() => {
+    if (user_type === "user" && user?.data) {
+      setIsDataAvailable(true);
+    } else if (user_type === "panelist" && panelist?.data) {
+      setIsDataAvailable(true);
+    }
+  }, [user, panelist, user_type]);
+
+  if (user_type === "user" && user?.data) {
+    fullName = `${user.data.fname} ${user.data.lname}`;
+  } else if (user_type === "panelist" && panelist?.data) {
+    fullName = panelist.data.fullName;
   }
 
   const handleAction = (action) => {

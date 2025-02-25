@@ -1,296 +1,32 @@
-[{
-  "_id": {
-    "$oid": "671c8713375967e31734b23c"
-  },
-  "subject": "Manavat Murder Case",
-  "desc": "Manavat Murder Case",
-  "pollQuestion": "Manavat Murder Criminals should be hanged ?",
-  "options": [
-    {
-      "name": "Yes",
-      "voteCount": 1,
-      "_id": {
-        "$oid": "671c8713375967e31734b23d"
-      }
+[
+  {
+    "fullName": "John Doe",
+    "phone": "+1234567890",
+    "email": "johndoe@example.com",
+    "service": "Technology Consulting",
+    "contribution": "Speaker at tech events",
+    "topicOfInterest": "AI and Machine Learning",
+    "secretKey": "abc123",
+    "socialMedia": {
+      "x": "@johndoe",
+      "facebook": "facebook.com/johndoe",
+      "instagram": "instagram.com/johndoe"
     },
-    {
-      "name": "No",
-      "voteCount": 6,
-      "_id": {
-        "$oid": "671c8713375967e31734b23e"
-      }
+    "imageUrl": "https://example.com/images/johndoe.jpg"
+  },
+  {
+    "fullName": "Jane Smith",
+    "phone": "+1987654321",
+    "email": "janesmith@example.com",
+    "service": "Business Strategy",
+    "contribution": "Panelist on leadership topics",
+    "topicOfInterest": "Entrepreneurship",
+    "secretKey": "xyz456",
+    "socialMedia": {
+      "x": "@janesmith",
+      "facebook": "facebook.com/janesmith",
+      "instagram": "instagram.com/janesmith"
     },
-    {
-      "name": "Not Sure",
-      "voteCount": 1,
-      "_id": {
-        "$oid": "671c8713375967e31734b23f"
-      }
-    }
-  ],
-  "status": "accepted",
-  "createdAt": {
-    "$date": "2024-10-26T06:07:15.577Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "67239b555bc57a63da53b243"
-  },
-  "subject": "India moving towards a ‘secular civil code’ to strengthen unity: PM Modi",
-  "desc": "On National Unity Day, PM Modi warns of forces trying to paint country in negative light, calls for ‘urban Naxals’ to be identified and unmasked",
-  "pollQuestion": "should the UCC implemented in india?",
-  "options": [
-    {
-      "name": "yes",
-      "voteCount": 1,
-      "_id": {
-        "$oid": "67239b555bc57a63da53b244"
-      }
-    },
-    {
-      "name": "no",
-      "voteCount": 1,
-      "_id": {
-        "$oid": "67239b555bc57a63da53b245"
-      }
-    }
-  ],
-  "status": "accepted",
-  "createdAt": {
-    "$date": "2024-10-31T14:59:33.936Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "67239c565bc57a63da53c8a6"
-  },
-  "subject": "‘Can’t compromise on even an inch on India’s borders’: PM Modi celebrates Diwali with troops in Kachchh",
-  "desc": "The comments come a day after Indian and Chinese troops completed the process of disengagement at two friction points at Demchok and Depsang Plains in eastern Ladakh along the Line of Actual Control (LAC).",
-  "pollQuestion": "should the chinese be elimited from the border?",
-  "options": [
-    {
-      "name": "yes",
-      "voteCount": 1,
-      "_id": {
-        "$oid": "67239c565bc57a63da53c8a7"
-      }
-    },
-    {
-      "name": "no",
-      "voteCount": 1,
-      "_id": {
-        "$oid": "67239c565bc57a63da53c8a8"
-      }
-    }
-  ],
-  "status": "accepted",
-  "createdAt": {
-    "$date": "2024-10-31T15:03:50.608Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6724a68bee9d2a2f10bcffdc"
-  },
-  "subject": "Indian Railways being nayak",
-  "desc": "Indian Railways asked to pay ₹30,000 to passenger over dirty toilet",
-  "pollQuestion": "Is 30000 a being amount ?",
-  "options": [
-    {
-      "name": "YES",
-      "voteCount": 4,
-      "_id": {
-        "$oid": "6724a68bee9d2a2f10bcffdd"
-      }
-    },
-    {
-      "name": "NO",
-      "voteCount": 4,
-      "_id": {
-        "$oid": "6724a68bee9d2a2f10bcffde"
-      }
-    }
-  ],
-  "status": "accepted",
-  "createdAt": {
-    "$date": "2024-11-01T09:59:39.591Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "672b14643c43b2221ecd7b41"
-  },
-  "subject": "Kolkata case ",
-  "desc": "Kolkata rape case ",
-  "pollQuestion": "should they be hanged or not?",
-  "options": [
-    {
-      "name": "yes",
-      "voteCount": 1,
-      "_id": {
-        "$oid": "672b14643c43b2221ecd7b42"
-      }
-    },
-    {
-      "name": "no",
-      "voteCount": 0,
-      "_id": {
-        "$oid": "672b14643c43b2221ecd7b43"
-      }
-    }
-  ],
-  "status": "accepted",
-  "createdAt": {
-    "$date": "2024-11-06T07:01:56.173Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "675bc9353e5057725630993f"
-  },
-  "subject": "Fire breaking...",
-  "desc": "Child among 6 dead after fire breaking out at private hospital in Tamil Nadu",
-  "pollQuestion": "Are the hostipal safe enough?",
-  "options": [
-    {
-      "name": "Yes",
-      "voteCount": 0,
-      "_id": {
-        "$oid": "675bc9353e50577256309940"
-      }
-    },
-    {
-      "name": "They are not....",
-      "voteCount": 1,
-      "_id": {
-        "$oid": "675bc9353e50577256309941"
-      }
-    },
-    {
-      "name": "need some improvement",
-      "voteCount": 0,
-      "_id": {
-        "$oid": "675bc9353e50577256309942"
-      }
-    }
-  ],
-  "status": "accepted",
-  "createdAt": {
-    "$date": "2024-12-13T05:42:13.890Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "675bc98c3e50577256309954"
-  },
-  "subject": "Workload balances",
-  "desc": "Narayan murthy about woek life balance.",
-  "pollQuestion": "Do you agree with narayan murthy",
-  "options": [
-    {
-      "name": "Yes",
-      "voteCount": 0,
-      "_id": {
-        "$oid": "675bc98c3e50577256309955"
-      }
-    },
-    {
-      "name": "No",
-      "voteCount": 0,
-      "_id": {
-        "$oid": "675bc98c3e50577256309956"
-      }
-    },
-    {
-      "name": "Strongly",
-      "voteCount": 0,
-      "_id": {
-        "$oid": "675bc98c3e50577256309957"
-      }
-    }
-  ],
-  "status": "accepted",
-  "createdAt": {
-    "$date": "2024-12-13T05:43:40.202Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "675bc9df3e50577256309959"
-  },
-  "subject": "6 Delhi schools",
-  "desc": "6 Delhi schools receive bomb threat emails, second time this week",
-  "pollQuestion": "Are out Raw and IB are capable enough to handle such a accident?",
-  "options": [
-    {
-      "name": "Yes",
-      "voteCount": 1,
-      "_id": {
-        "$oid": "675bc9df3e5057725630995a"
-      }
-    },
-    {
-      "name": "No",
-      "voteCount": 0,
-      "_id": {
-        "$oid": "675bc9df3e5057725630995b"
-      }
-    },
-    {
-      "name": "They are so good",
-      "voteCount": 0,
-      "_id": {
-        "$oid": "675bc9df3e5057725630995c"
-      }
-    }
-  ],
-  "status": "accepted",
-  "createdAt": {
-    "$date": "2024-12-13T05:45:03.842Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "679bc016eac531ace41f00a7"
-  },
-  "subject": "At least 30 people killed in stampede at India's Kumbh Mela",
-  "desc": "At least 30 people killed in stampede at India's Kumbh Mela\n",
-  "pollQuestion": "Should such blind be there in people ?",
-  "options": [
-    {
-      "name": "Yes",
-      "voteCount": 0,
-      "_id": {
-        "$oid": "679bc016eac531ace41f00a8"
-      }
-    },
-    {
-      "name": "No",
-      "voteCount": 0,
-      "_id": {
-        "$oid": "679bc016eac531ace41f00a9"
-      }
-    },
-    {
-      "name": "Depends on Individual Bhakti",
-      "voteCount": 1,
-      "_id": {
-        "$oid": "679bc016eac531ace41f00aa"
-      }
-    }
-  ],
-  "status": "accepted",
-  "createdAt": {
-    "$date": "2025-01-30T18:08:22.412Z"
-  },
-  "__v": 0
-}]
+    "imageUrl": "https://example.com/images/janesmith.jpg"
+  }
+]

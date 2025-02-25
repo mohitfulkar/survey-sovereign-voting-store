@@ -14,7 +14,7 @@ export const handleAsyncAction = (
       state.loading = false;
       state[stateKey] = action.payload; // Dynamically update state
       state.success = true;
-      state.lastFetched = Date.now();
+
       if (tokenState) {
         state[tokenState] = action.payload.token; // Set additional state
       }

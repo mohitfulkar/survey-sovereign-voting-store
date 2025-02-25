@@ -17,7 +17,6 @@ export const getUserItems = createAsyncThunk("user/getUserItems", async () => {
 });
 
 export const getUserById = createAsyncThunk("user/getUserById", async (id) => {
-  console.log("id inside slices", id);
   const response = await axios.get(`${baseUrl}/user-detail/${id}`);
   return response.data;
 });
