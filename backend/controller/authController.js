@@ -23,7 +23,6 @@ export const userlogin = async (req, res) => {
 export const panelistlogin = async (req, res) => {
   try {
     const { fullName, secretKey } = req.body;
-    console.log("fullName, secretKey", fullName, secretKey);
     const result = await authService.login({ fullName, secretKey }, "panelist");
     res.status(200).json(result);
   } catch (error) {

@@ -28,7 +28,7 @@ export const commanService = {
       // Default values
       sortBy = sortBy || "createdAt";
       order = order === "desc" ? -1 : 1; // Convert to MongoDB sorting order
-      limit = limit ? parseInt(limit) : 10; // Default limit 10
+      limit = limit; // Default limit 10
       page = page ? parseInt(page) : 1; // Default page 1
       const skip = (page - 1) * limit; // Calculate the number of documents to skip
 
