@@ -85,4 +85,84 @@ export const pollFields = [
     placeholder: "Enter poll question",
     required: true,
   },
+  {
+    name: "file",
+    label: "Upload File",
+    type: "file",
+    required: true,
+  },
+];
+
+export const addPanelistFields = [
+  {
+    name: "fullName",
+    type: "text",
+    label: "Full Name",
+    placeholder: "Enter Full Name",
+    required: true,
+  },
+  {
+    name: "phone",
+    type: "text",
+    label: "Phone Number",
+    placeholder: "Enter Phone Number",
+    required: true,
+  },
+  {
+    name: "email",
+    type: "email",
+    label: "Email Address",
+    placeholder: "Enter Email Address",
+    required: true,
+  },
+  {
+    name: "service",
+    type: "text",
+    label: "Service",
+    placeholder: "Enter Service Name ",
+  },
+  {
+    name: "contribution",
+    type: "textarea",
+    label: "Contribution",
+    placeholder: "Enter Contribution (comma seperated)",
+  },
+  {
+    name: "topicOfInterest",
+    type: "textarea",
+    label: "Topic of Interest",
+    placeholder: "Enter Topic of Interest (comma seperated)",
+  },
+  {
+    name: "secretKey",
+    type: "password",
+    label: "Secret Key",
+    placeholder: "Enter Secret Key",
+  },
+  {
+    name: "x",
+    type: "text",
+    label: "Twitter/X",
+    placeholder: "Enter Twitter/X Profile",
+  },
+  {
+    name: "facebook",
+    type: "text",
+    label: "Facebook",
+    placeholder: "Enter Facebook Profile",
+  },
+  {
+    name: "instagram",
+    type: "text",
+    label: "Instagram",
+    placeholder: "Enter Instagram Profile",
+  },
+  {
+    name: "photo",
+    type: "file",
+    label: "Photo",
+    placeholder: "Upload Photo",
+    accept: "image/*",
+    required: true,
+  },
 ];

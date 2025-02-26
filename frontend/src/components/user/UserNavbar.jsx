@@ -40,6 +40,8 @@ const UserNavbar = ({ user_type }) => {
     fullName = `${user.data.fname} ${user.data.lname}`;
   } else if (user_type === "panelist" && panelist?.data) {
     fullName = panelist.data.fullName;
+  } else {
+    fullName = "Admin";
   }
 
   const handleAction = (action) => {
