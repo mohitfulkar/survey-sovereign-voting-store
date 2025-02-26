@@ -7,12 +7,10 @@ const panelistSchema = new mongoose.Schema({
   contribution: String,
   topicOfInterest: String,
   secretKey: String,
-  socialMedia: {
-    x: String,
-    facebook: String,
-    instagram: String,
-  },
-  imageUrl: String, // To store image URL or path
+  x: String,
+  facebook: String,
+  instagram: String,
+  photo: String, // To store image URL or path
 });
 
 export const Panelist = mongoose.model("Panelist", panelistSchema);

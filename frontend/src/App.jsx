@@ -8,13 +8,15 @@ import Login from "./pages/user/Login";
 import PanelistLogin from "./pages/panelist/PanelistLogin";
 import UserLanding from "./pages/user/UserLanding";
 import Landing from "./pages/Landing";
-import PanelistLanding from "./pages/panelist/PanelistLayout";
 import { useSelector } from "react-redux";
 import PanelistLayout from "./pages/panelist/PanelistLayout";
 import CreatePoll from "./pages/panelist/side-nav/CreatePoll";
 import PollStatus from "./pages/panelist/side-nav/PollStatus";
 import VoteCount from "./pages/panelist/side-nav/VoteCount";
-import AddPanelist from "./pages/panelist/side-nav/AddPanelist";
+import AddPanelist from "./pages/admin/side-nav/AddPanelist";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminLanding from "./pages/admin/AdminLanding";
+import ActivePanelist from "./pages/admin/side-nav/ActivePanelist";
 
 const App = () => {
   const { loading: authLoading } = useSelector((state) => state.auth);
@@ -43,7 +45,7 @@ const App = () => {
           <div className="loader-wrapper">
             <span className="loader"></span>
           </div>
-        )}{" "}
+        )}
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
@@ -54,7 +56,10 @@ const App = () => {
           <Route path="/panelist/:id/create-poll" element={<CreatePoll />} />
           <Route path="/panelist/:id/poll-status" element={<PollStatus />} />
           <Route path="/panelist/:id/vote-count" element={<VoteCount />} />
-          <Route path="/panelist/:id/add-panelist" element={<AddPanelist />} />
+          <Route path="/add-panelist" element={<AddPanelist />} />
+          <Route path="/panelist-history" element={<ActivePanelist />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminLanding />} />
         </Routes>
       </Router>
     </>

@@ -32,38 +32,23 @@ export const getPanelistById = async (req, res) => {
   }
 };
 
-export const createPanelist = async (req, res) => {
+export const addPanelist = async (req, res) => {
   try {
-    const payload = req.body;
-
-    // Validate required fields
-    if (!payload.fullName || !payload.phone || !payload.email) {
-      return res
-        .status(400)
-        .json({ message: "Full Name, Phone, and Email are required." });
-    }
-
-    // Check if the panelist already exists
-    const existingPanelist = await Panelist.findOne({ email: payload.email });
-    if (existingPanelist) {
-      return res
-        .status(409)
-        .json({ message: "Panelist with this email already exists." });
-    }
-
-    // Create new panelist
+    const photo = req.file.filename;
+    console.log("photo", photo);
+    const payload = {
+      ...req.body,
+      photo,
+    };
     const result = await commanService.create(Panelist, payload);
-
-    // Send success response
-    return res.status(201).json({
-      message: "Panelist created successfully.",
-      panelist: result,
-    });
+    res.status(201).json({ message: result.message, data: result.data });
   } catch (error) {
-    console.error("Error creating panelist:", error);
-    return res.status(500).json({
-      message: "An error occurred while creating the panelist.",
-      error: error.message,
-    });
+    console.error("Error in add panelist:", error);
+    // Send appropriate error response
+    const status = error.name === "ValidationError" ? 400 : 500;
+
+    res
+      .status(status)
+      .json({ message: error.message || "Internal server error" });
   }
 };

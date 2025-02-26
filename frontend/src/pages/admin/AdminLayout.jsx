@@ -1,46 +1,41 @@
 import React, { useState } from "react";
-import { Outlet, useParams } from "react-router-dom"; // Import Outlet for nested routes
+import { Outlet } from "react-router-dom"; // Import Outlet for nested routes
 import UserNavbar from "../../components/user/UserNavbar";
-import { FaRegNewspaper } from "react-icons/fa";
-import { MdOutlineFeedback } from "react-icons/md";
-import { RiBloggerLine } from "react-icons/ri";
 import { RxHamburgerMenu } from "react-icons/rx";
 import UserDrawer from "../../components/user/UserDrawer";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import { TiTickOutline } from "react-icons/ti";
 import { RiNumbersLine } from "react-icons/ri";
-import { IoPersonAddOutline } from "react-icons/io5";
+import { IoPersonAddOutline, IoPersonOutline } from "react-icons/io5";
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
-const PanelistLayout = ({ children }) => {
+const AdminLayout = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const { id } = useParams();
 
   const menuItems = [
     {
-      label: "Create Poll",
-      icon: <IoIosAddCircleOutline />,
-      route: `/panelist/${id}/create-poll`,
-    },
-    {
-      label: "Accept/Reject Poll",
-      icon: <TiTickOutline />,
-      route: `/panelist/${id}/poll-status`,
-    },
-    {
-      label: "Vote Counts",
-      icon: <RiNumbersLine />,
-      route: `/panelist/${id}/vote-count`,
-    },
-    {
-      label: "Add/Delete Panelists",
+      label: "Add Panelist",
       icon: <IoPersonAddOutline />,
-      route: `/panelist/${id}/add-panelist`,
+      route: `/add-panelist`,
+    },
+    {
+      label: "Active Panelists",
+      icon: <IoPersonOutline />,
+      route: `/panelist-history`,
+    },
+    {
+      label: "Active Polls",
+      icon: <RiNumbersLine />,
+      route: `/admin/poll-info`,
+    },
+    {
+      label: "User Info",
+      icon: <IoIosInformationCircleOutline />,
+      route: `/admin/user-info`,
     },
   ];
 
   return (
     <>
-      <UserNavbar user_type="panelist" />
+      <UserNavbar user_type="admin" />
       <div className="flex">
         {/* Sidebar */}
         <div className="relative">
@@ -48,7 +43,7 @@ const PanelistLayout = ({ children }) => {
             onClick={() => setIsVisible(!isVisible)}
             className="w-[3rem] cursor-pointer z-10 pt-2 h-8"
           />
-          <div className="absolute">
+          <div className="absolute top-0 left-0 z-20">
             <UserDrawer
               menuItems={menuItems}
               isVisible={isVisible}
@@ -66,4 +61,4 @@ const PanelistLayout = ({ children }) => {
   );
 };
 
-export default PanelistLayout;
+export default AdminLayout;

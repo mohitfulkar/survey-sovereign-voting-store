@@ -26,6 +26,17 @@ export const getPanelistsById = createAsyncThunk(
     return response.data;
   }
 );
+export const addPanelist = createAsyncThunk(
+  "panelists/addPanelis",
+  async (payload) => {
+    const response = await axios.post(`${baseUrl}/add-panelist`, payload, {
+      headers: {
+        "Content-Type": "multipart/form-data", // This tells the server to expect file uploads
+      },
+    });
+    return response.data;
+  }
+);
 
 const panelistSlice = createSlice({
   name: "panelist",
@@ -34,6 +45,7 @@ const panelistSlice = createSlice({
   extraReducers: (builder) => {
     handleAsyncAction(builder, getPanelists, "panelists");
     handleAsyncAction(builder, getPanelistsById, "panelist");
+    handleAsyncAction(builder, addPanelist, "panelist");
   },
 });
 
