@@ -48,7 +48,6 @@ export const getPollById = async (req, res) => {
 export const deletePollById = async (req, res) => {
   try {
     let { id } = req.params; //
-    console.log("inside controller id");
 
     const response = await commanService.deleteById(Poll, id);
     res.status(201).json(response); // Send the response back to the client
@@ -62,7 +61,6 @@ export const deletePollById = async (req, res) => {
 };
 export const deletePolls = async (req, res) => {
   try {
-    console.log("inside controller id");
 
     const response = await commanService.deleteById(Poll);
     res.status(201).json(response); // Send the response back to the client
@@ -77,7 +75,6 @@ export const deletePolls = async (req, res) => {
 export const createPoll = async (req, res) => {
   try {
     let payload = req.body; //
-    console.log("payload before adding createdBy:", payload);
     const response = await commanService.create(Poll, payload);
     res.status(201).json(response); // Send the response back to the client
   } catch (error) {
@@ -130,7 +127,6 @@ export const updateStatus = async (req, res) => {
       data: updatedPoll,
     });
   } catch (error) {
-    console.error("Error updating poll:", error);
     return res.status(500).json({
       success: false,
       message: "Failed to update poll",

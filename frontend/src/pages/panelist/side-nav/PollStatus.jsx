@@ -14,22 +14,25 @@ const PollStatus = () => {
   const [actionType, setActionType] = useState(null);
   const dispatch = useDispatch();
   const { pollItems, success } = useSelector((state) => state.poll);
+  console.log("pollItems", pollItems);
   const nonRejectedPoll = pollItems.filter(
     (poll) => poll.status !== "rejected"
   );
+  console.log("nonRejectedPoll", nonRejectedPoll);
 
   useEffect(() => {
-    if (!pollItems?.data || pollItems.data.length === 0) {
-      dispatch(getPollItems());
-    }
-  }, [dispatch, pollItems?.data]);
+    // if (!pollItems || pollItems.length === 0) {
+    dispatch(getPollItems());
+    // }
+  }, [dispatch]);
 
   const handleAction = async () => {
+    console.log("actionType", actionType);
     if (
       !selectedPollId ||
       !["rejected", "accepted", "pending"].includes(actionType)
     )
-      return "Unknown Status";
+      return;
 
     try {
       await dispatch(
@@ -49,7 +52,7 @@ const PollStatus = () => {
       {isVisible && (
         <Modal
           question={
-            actionType === "drop"
+            actionType === "rejected"
               ? "Do you want to drop this Poll?"
               : "Do you want to publish this Poll?"
           }
@@ -110,7 +113,7 @@ const PollStatus = () => {
             ))}
           </tbody>
         </table>
-        {nonRejectedPoll?.data?.length === 0 && (
+        {nonRejectedPoll?.length === 0 && (
           <p className="text-center mt-4 text-gray-600">No polls available.</p>
         )}
       </div>

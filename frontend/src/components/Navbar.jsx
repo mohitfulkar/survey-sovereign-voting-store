@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { btnClass } from "../constants/styleClass";
 
-
 const Navbar = () => {
   return (
     <nav className="p bg-blue-600 p-5 shadow-lg flex justify-between items-center">
@@ -13,6 +12,9 @@ const Navbar = () => {
       </Link>
       <div className="flex items-center space-x-6">
         <div className="flex items-center space-x-4">
+          <Link to="/panelist/login" className={btnClass}>
+            Panelist
+          </Link>
           <Link to="/login" className={btnClass}>
             Login
           </Link>

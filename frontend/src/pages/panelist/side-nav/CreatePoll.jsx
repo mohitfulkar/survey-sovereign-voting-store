@@ -34,7 +34,6 @@ const CreatePoll = () => {
 
   useEffect(() => {
     dispatch(getPanelistsById(id));
-    console.log("panelist", panelist);
   }, [dispatch]);
 
   const handleOptionChange = (index, value) => {

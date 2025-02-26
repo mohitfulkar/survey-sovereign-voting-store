@@ -35,7 +35,6 @@ export const getPanelistById = async (req, res) => {
 export const createPanelist = async (req, res) => {
   try {
     const payload = req.body;
-    console.log("payload", payload);
 
     // Validate required fields
     if (!payload.fullName || !payload.phone || !payload.email) {

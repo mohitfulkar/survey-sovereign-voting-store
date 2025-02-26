@@ -31,7 +31,6 @@ export const authService = {
 
   login: async (payload, userType) => {
     const { email, password, fullName, secretKey } = payload;
-    console.log("fullName,secretKey", fullName, secretKey);
     let token;
 
     switch (userType) {
@@ -40,10 +39,7 @@ export const authService = {
         if (!fullName || !secretKey) {
           throw new Error("Full name and secret key are required for panelist");
         }
-        console.log(
-          "process.env.PANELIST_JWT_SECRET",
-          process.env.PANELIST_JWT_SECRET
-        );
+        
 
         // Find panelist by full name
         const panelist = await Panelist.findOne({ fullName });
