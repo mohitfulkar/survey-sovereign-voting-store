@@ -27,4 +27,15 @@ export const commanService = {
       throw error.response?.data || "Something went wrong";
     }
   },
+  update: async (parentKey, id, payload) => {
+    try {
+      const response = await axios.put(
+        `${baseUrl}/${parentKey}/${id}`,
+        payload
+      );
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || "Something went wrong";
+    }
+  },
 };

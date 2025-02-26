@@ -27,7 +27,6 @@ export const createPoll = createAsyncThunk(
   "poll/createPoll",
   async (pollData, { rejectWithValue }) => {
     try {
-      console.log("pollData", pollData);
       return await commanService.create("create-poll", pollData);
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -38,20 +37,36 @@ export const deletePollById = createAsyncThunk(
   "poll/deletePollById",
   async (id, { rejectWithValue }) => {
     try {
-      return await commanService.delete("delete-poll",id);
+      return await commanService.delete("delete-poll", id);
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 );
+export const updateStatus = createAsyncThunk(
+  "poll/updateStatus",
+  async ({ id, status }, { rejectWithValue }) => {
+    try {
+      return await commanService.update("poll/status", id, { status });
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+let constant = [
+  { method: getPollItems, variable: "pollItems" },
+  { method: getPollById, variable: "pollItem" },
+  { method: createPoll, variable: "pollItem" },
+  { method: updateStatus, variable: "pollItem" },
+];
 const pollSlice = createSlice({
   name: "poll",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    handleAsyncAction(builder, getPollItems, "pollItems");
-    handleAsyncAction(builder, getPollById, "pollItem");
-    handleAsyncAction(builder, createPoll, "pollItem");
+    constant.forEach((item) => {
+      handleAsyncAction(builder, item.method, item.variable);
+    });
   },
 });
 

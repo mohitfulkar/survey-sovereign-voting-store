@@ -88,3 +88,53 @@ export const createPoll = async (req, res) => {
     });
   }
 };
+export const updateStatus = async (req, res) => {
+  try {
+    const { status } = req.body; // Extract `id` and `status` from request body
+    const { id } = req.params; // Extract `id` and `status` from request body
+
+    // Check if `id` and `status` are provided
+    if (!id || !status) {
+      return res.status(400).json({
+        success: false,
+        message: "Poll ID and status are required",
+      });
+    }
+
+    // Validate that `status` is one of the allowed values
+    const allowedStatuses = ["pending", "accepted", "rejected"];
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid status. Allowed values: ${allowedStatuses.join(
+          ", "
+        )}`,
+      });
+    }
+
+    // Check if poll exists
+    const existingPoll = await Poll.findById(id);
+    if (!existingPoll) {
+      return res.status(404).json({
+        success: false,
+        message: "Poll not found",
+      });
+    }
+
+    // Update poll using the common service
+    const updatedPoll = await commanService.update(Poll, id, { status });
+
+    return res.status(200).json({
+      success: true,
+      message: "Poll status updated successfully",
+      data: updatedPoll,
+    });
+  } catch (error) {
+    console.error("Error updating poll:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to update poll",
+      error: error.message,
+    });
+  }
+};

@@ -3,16 +3,20 @@ import PanelistLayout from "../PanelistLayout";
 import { MdPublish, MdDeleteOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deletePollById,
   getPollItems,
+  updateStatus,
 } from "../../../app/features/poll/pollSlice";
 import Modal from "../../../components/shared/Modal";
 
 const PollStatus = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedPollId, setSelectedPollId] = useState(null);
+  const [actionType, setActionType] = useState(null);
   const dispatch = useDispatch();
-  const { pollItems } = useSelector((state) => state.poll);
+  const { pollItems, success } = useSelector((state) => state.poll);
+  const nonRejectedPoll = pollItems.filter(
+    (poll) => poll.status !== "rejected"
+  );
 
   useEffect(() => {
     if (!pollItems?.data || pollItems.data.length === 0) {
@@ -20,20 +24,36 @@ const PollStatus = () => {
     }
   }, [dispatch, pollItems?.data]);
 
-  const handleDelete = () => {
-    if (selectedPollId) {
-      dispatch(deletePollById(selectedPollId));
-      setIsVisible(false);
-      setSelectedPollId(null);
+  const handleAction = async () => {
+    if (
+      !selectedPollId ||
+      !["rejected", "accepted", "pending"].includes(actionType)
+    )
+      return "Unknown Status";
+
+    try {
+      await dispatch(
+        updateStatus({ id: selectedPollId, status: actionType })
+      ).unwrap(); // Wait for action to complete
+      dispatch(getPollItems()); // Fetch updated data after success
+    } catch (error) {
+      console.error("Error updating poll:", error);
     }
+
+    setIsVisible(false);
+    setSelectedPollId(null);
   };
 
   return (
     <PanelistLayout>
       {isVisible && (
         <Modal
-          question="Do you want to drop this Poll?"
-          onConfirm={handleDelete}
+          question={
+            actionType === "drop"
+              ? "Do you want to drop this Poll?"
+              : "Do you want to publish this Poll?"
+          }
+          onConfirm={handleAction}
           onCancel={() => setIsVisible(false)}
         />
       )}
@@ -55,19 +75,31 @@ const PollStatus = () => {
             </tr>
           </thead>
           <tbody>
-            {pollItems.map((item) => (
+            {nonRejectedPoll.map((item) => (
               <tr key={item._id} className="h-12 border-b border-gray-300">
                 <td className="px-4 py-2">{item.subject}</td>
                 <td className="px-4 py-2">{item.pollQuestion}</td>
                 <td className="px-4 py-2">{item.created_by_name}</td>
                 <td className="px-4 py-2">
-                  <button className="bg-green-500 text-white px-3 py-1 rounded">
-                    <MdPublish />
-                  </button>
+                  {item.status !== "accepted" ? (
+                    <button
+                      onClick={() => {
+                        setSelectedPollId(item._id);
+                        setIsVisible(true);
+                        setActionType("accepted");
+                      }}
+                      className="bg-green-500 text-white px-3 py-1 rounded"
+                    >
+                      <MdPublish />
+                    </button>
+                  ) : (
+                    ""
+                  )}
                   <button
                     onClick={() => {
                       setSelectedPollId(item._id);
                       setIsVisible(true);
+                      setActionType("rejected");
                     }}
                     className="bg-red-500 text-white px-3 py-1 rounded ml-2"
                   >
@@ -78,7 +110,7 @@ const PollStatus = () => {
             ))}
           </tbody>
         </table>
-        {pollItems?.data?.length === 0 && (
+        {nonRejectedPoll?.data?.length === 0 && (
           <p className="text-center mt-4 text-gray-600">No polls available.</p>
         )}
       </div>
