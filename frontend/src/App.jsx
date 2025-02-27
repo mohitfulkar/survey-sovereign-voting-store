@@ -17,6 +17,7 @@ import AddPanelist from "./pages/admin/side-nav/AddPanelist";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLanding from "./pages/admin/AdminLanding";
 import ActivePanelist from "./pages/admin/side-nav/ActivePanelist";
+import ActivePolls from "./pages/admin/side-nav/ActivePolls";
 
 const App = () => {
   const { loading: authLoading } = useSelector((state) => state.auth);
@@ -60,6 +61,7 @@ const App = () => {
           <Route path="/panelist-history" element={<ActivePanelist />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLanding />} />
+          <Route path="/admin/poll-info" element={<ActivePolls />} />
         </Routes>
       </Router>
     </>

@@ -6,6 +6,7 @@ import { baseUrl } from "../../../constants/env.js";
 const initialState = {
   pollItems: [],
   pollItem: null,
+  count: null,
   loading: false,
   error: null,
   success: false,
@@ -23,6 +24,11 @@ export const getPollById = createAsyncThunk("poll/getPollById", async (id) => {
   const response = await axios.get(`${baseUrl}/poll-detail/${id}`); // Fetch a single poll by ID
   return response.data;
 });
+export const getPollCount = createAsyncThunk("poll/getPollCount", async () => {
+  const response = await axios.get(`${baseUrl}/poll-count`);
+  return response.data;
+});
+
 export const createPoll = createAsyncThunk(
   "poll/createPoll",
   async (pollData, { rejectWithValue }) => {
@@ -58,6 +64,7 @@ let constant = [
   { method: getPollById, variable: "pollItem" },
   { method: createPoll, variable: "pollItem" },
   { method: updateStatus, variable: "pollItem" },
+  { method: getPollCount, variable: "count" },
 ];
 const pollSlice = createSlice({
   name: "poll",

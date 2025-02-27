@@ -14,6 +14,7 @@ const PanelistLogin = () => {
 
   const { loading, success, error, token } = useSelector((state) => state.auth);
   const { panelists } = useSelector((state) => state.panelist);
+  
   const fullName = panelists?.data?.map((item) => item.fullName) || [];
 
   const initialFormState = panelistLoginFields.reduce((acc, field) => {

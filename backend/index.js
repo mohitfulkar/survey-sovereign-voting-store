@@ -13,8 +13,9 @@ connectDB();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "10mb" })); // Example: 10 MB
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
+app.use("/uploads", express.static("uploads"));
 
 const routes = [pollRoutes, userRoutes, panelistRoutes];
 routes.forEach((route) => {

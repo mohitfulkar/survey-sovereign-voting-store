@@ -44,6 +44,39 @@ export const getPollById = async (req, res) => {
     });
   }
 };
+export const getPollCount = async (req, res) => {
+  try {
+    const acceptedCount = await commanService.getCount(Poll, {
+      status: "accepted",
+    });
+    console.log("acceptedCount", acceptedCount);
+    const rejectedCount = await commanService.getCount(Poll, {
+      status: "rejected",
+    });
+    const pendingCount = await commanService.getCount(Poll, {
+      status: "pending",
+    });
+    const totalCount = await commanService.getCount(Poll, {}); // Get total count
+
+    res.status(200).json({
+      success: true,
+      message: "Poll count fetched successfully",
+      data: {
+        accepted: acceptedCount.count,
+        rejected: rejectedCount.count,
+        pending: pendingCount.count,
+        total: totalCount.total, // Use total count from the function
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching poll count:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch poll",
+      error: error.message,
+    });
+  }
+};
 
 export const deletePollById = async (req, res) => {
   try {
@@ -61,7 +94,6 @@ export const deletePollById = async (req, res) => {
 };
 export const deletePolls = async (req, res) => {
   try {
-
     const response = await commanService.deleteById(Poll);
     res.status(201).json(response); // Send the response back to the client
   } catch (error) {

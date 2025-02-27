@@ -78,6 +78,17 @@ export const commanService = {
     }
   },
 
+  getCount: async (model, filter) => {
+    try {
+      const count = await model.countDocuments(filter);
+      const total = await model.countDocuments();
+      return { total, count };
+    } catch (error) {
+      console.error("Error in getCount:", error);
+      throw new Error("Error counting documents");
+    }
+  },
+
   getItemById: async (model, id) => {
     try {
       // Fetch the record by ID from the model
