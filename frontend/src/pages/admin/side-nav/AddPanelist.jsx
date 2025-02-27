@@ -49,6 +49,7 @@ const AddPanelist = () => {
         toast.success("Panelist Added successfully");
         setFormData(null);
         setFile(null);
+        navigate("/panelist-history");
       }
     } catch (error) {
       console.error("Error adding panelist:", error);

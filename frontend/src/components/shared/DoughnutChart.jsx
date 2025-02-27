@@ -4,17 +4,12 @@ import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
-const DoughnutChart = ({ poll }) => {
-
-  // Ensure data extraction is safe
-  const labels = poll?.options?.map((option) => option.name) || [];
-  const dataValues = poll?.options?.map((option) => option.voteCount) || [];
-
+const DoughnutChart = ({ poll, labels, dataValues, label }) => {
   const data = {
     labels,
     datasets: [
       {
-        label: "Votes",
+        label: label,
         data: dataValues,
         backgroundColor: [
           "#FF6384",

@@ -35,11 +35,14 @@ export const getPanelistById = async (req, res) => {
 export const addPanelist = async (req, res) => {
   try {
     const photo = req.file.filename;
-    console.log("photo", photo);
     const payload = {
       ...req.body,
       photo,
     };
+    const total = await Panelist.countDocuments();
+    if (total === 3)
+      res.status(400).json({ message: "Cannot Add more than 3 panelist" });
+
     const result = await commanService.create(Panelist, payload);
     res.status(201).json({ message: result.message, data: result.data });
   } catch (error) {
