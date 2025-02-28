@@ -16,11 +16,12 @@
 /* UserDrawer Styles */
 .drawer {
   width: 17rem;
-  height: 100vh;
+  height: 100%;
   background-color: #f3f4f6; /* Light gray background */
   position: fixed;
   transform: translateX(-100%); /* Start off-screen to the left */
   transition: transform 0.2s ease-in-out; /* Smooth transition */
+  z-index: 10;
 }
 
 .drawer.open {

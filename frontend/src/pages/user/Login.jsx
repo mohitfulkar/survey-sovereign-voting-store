@@ -10,7 +10,7 @@ import { tokenService } from "../../service/tokenService";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, success, error, token } = useSelector((state) => state.auth);
+  const {  success, error, token } = useSelector((state) => state.auth);
   const initialFormState = loginFields.reduce((acc, field) => {
     acc[field.name] = "";
     return acc;

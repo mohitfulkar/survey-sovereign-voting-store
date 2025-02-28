@@ -7,6 +7,7 @@ import {
   updateStatus,
 } from "../../../app/features/poll/pollSlice";
 import Modal from "../../../components/shared/Modal";
+import SearchBar from "../../../components/shared/SearchBar";
 
 const PollStatus = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -60,7 +61,9 @@ const PollStatus = () => {
           onCancel={() => setIsVisible(false)}
         />
       )}
-
+      <div className="text-center">
+        <SearchBar />
+      </div>
       <div className="m-3">
         <table className="w-full border-collapse border border-gray-300">
           <thead>
