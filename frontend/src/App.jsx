@@ -18,6 +18,7 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLanding from "./pages/admin/AdminLanding";
 import ActivePanelist from "./pages/admin/side-nav/ActivePanelist";
 import ActivePolls from "./pages/admin/side-nav/ActivePolls";
+import PanelistLanding from "./pages/panelist/PanelistLanding";
 
 const App = () => {
   const { loading: authLoading } = useSelector((state) => state.auth);
@@ -53,7 +54,7 @@ const App = () => {
           <Route path="/register" element={<SignUp />} />
           <Route path="/user/:id" element={<UserLanding />} />
           <Route path="/panelist/login" element={<PanelistLogin />} />
-          <Route path="/panelist/:id" element={<PanelistLayout />} />
+          <Route path="/panelist/:id" element={<PanelistLanding />} />
           <Route path="/panelist/:id/create-poll" element={<CreatePoll />} />
           <Route path="/panelist/:id/poll-status" element={<PollStatus />} />
           <Route path="/panelist/:id/vote-count" element={<VoteCount />} />

@@ -65,7 +65,6 @@ export const getPollCount = async (req, res) => {
         accepted: acceptedCount.count,
         rejected: rejectedCount.count,
         pending: pendingCount.count,
-        total: totalCount.total, // Use total count from the function
       },
     });
   } catch (error) {

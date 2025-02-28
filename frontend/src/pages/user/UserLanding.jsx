@@ -35,19 +35,6 @@ const UserLanding = () => {
   return (
     <>
       <UserNavbar user_type="user" />
-      <div className="relative">
-        <RxHamburgerMenu
-          onClick={() => setIsVisible(!isVisible)}
-          className="w-[3rem] cursor-pointer z-10 pt-2 h-8"
-        />
-        <div className="absolute top-0 left-0 z-20">
-          <UserDrawer
-            menuItems={menuItems}
-            isVisible={isVisible}
-            setIsVisible={() => setIsVisible(!isVisible)}
-          />
-        </div>
-      </div>
     </>
   );
 };

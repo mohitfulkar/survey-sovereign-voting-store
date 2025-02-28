@@ -85,12 +85,7 @@ export const pollFields = [
     placeholder: "Enter poll question",
     required: true,
   },
-  {
-    name: "file",
-    label: "Upload File",
-    type: "file",
-    required: true,
-  },
+ 
 ];
 
 export const addPanelistFields = [
