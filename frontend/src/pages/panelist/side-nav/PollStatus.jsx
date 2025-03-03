@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import PanelistLayout from "../PanelistLayout";
 import { MdPublish, MdDeleteOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { debounce } from "lodash"; // Import lodash debounce
+
 import {
   getPollItems,
   updateStatus,
 } from "../../../app/features/poll/pollSlice";
 import Modal from "../../../components/shared/Modal";
 import SearchBar from "../../../components/shared/SearchBar";
-
 const PollStatus = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedPollId, setSelectedPollId] = useState(null);
@@ -22,9 +23,9 @@ const PollStatus = () => {
   console.log("nonRejectedPoll", nonRejectedPoll);
 
   useEffect(() => {
-    // if (!pollItems || pollItems.length === 0) {
-    dispatch(getPollItems());
-    // }
+    if (!pollItems || pollItems.length === 0) {
+      dispatch(getPollItems());
+    }
   }, [dispatch]);
 
   const handleAction = async () => {
@@ -48,6 +49,13 @@ const PollStatus = () => {
     setSelectedPollId(null);
   };
 
+  const handleSearch = debounce((e) => {
+    const searchValue = e.target.value.trim();
+    dispatch(
+      getPollItems({ search_data: searchValue, search_fields: "pollQuestion" })
+    );
+  }, 300);
+
   return (
     <PanelistLayout>
       {isVisible && (
@@ -62,7 +70,7 @@ const PollStatus = () => {
         />
       )}
       <div className="text-center">
-        <SearchBar />
+        <SearchBar handleSearch={handleSearch} searchOn="Poll Question" />
       </div>
       <div className="m-3">
         <table className="w-full border-collapse border border-gray-300">

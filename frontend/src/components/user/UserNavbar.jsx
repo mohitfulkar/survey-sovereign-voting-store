@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../app/features/user/userSlices.js";
 import { getPanelistsById } from "../../app/features/panelist/panelistSlices.js";
 import "../../constants/style.css";
-import { to } from "./../../../node_modules/moment/src/lib/moment/to";
 
 const UserNavbar = ({ user_type, navbarItem }) => {
   const dispatch = useDispatch();
@@ -14,7 +13,7 @@ const UserNavbar = ({ user_type, navbarItem }) => {
 
   const { user } = useSelector((state) => state.user || {});
   const { panelist } = useSelector((state) => state.panelist || {});
-
+  console.log("panelist", panelist);
   const [isDataAvailable, setIsDataAvailable] = useState(false);
 
   let fullName = "Guest";
@@ -65,8 +64,8 @@ const UserNavbar = ({ user_type, navbarItem }) => {
           user_type === "user"
             ? "/user-dashboard"
             : user_type === "panelist"
-            ? "/panelist-dashboard"
-            : "/admin-dashboard"
+            ? `/panelist/${id}`
+            : "/admin"
         }
         className="text-white text-2xl font-bold"
       >
