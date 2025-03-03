@@ -22,49 +22,59 @@ export const commanService = {
   },
   getAll: async (model, queryParams = {}) => {
     try {
-      let { sortBy, order, filter, fields, limit, page } = queryParams;
-      console.log(filter);
-
-      // Default values
+      console.log("Received Query Parameters:", queryParams);
+  
+      let { search_data, search_fields, sortBy, order, filter, fields, limit, page, ...filters } = queryParams;
+  
+      console.log("Extracted Parameters:", { search_data, search_fields, sortBy, order, filter, fields, limit, page, filters });
+  
+      // Default sorting & pagination
       sortBy = sortBy || "createdAt";
-      order = order === "desc" ? -1 : 1; // Convert to MongoDB sorting order
-      limit = limit; // Default limit 10
-      page = page ? parseInt(page) : 1; // Default page 1
-      const skip = (page - 1) * limit; // Calculate the number of documents to skip
-
-      // Construct MongoDB query filter
-      let query = {};
+      order = order === "desc" ? -1 : 1;
+      limit = limit ? parseInt(limit) : 10;
+      page = page ? parseInt(page) : 1;
+      const skip = (page - 1) * limit;
+  
+      let query = { ...filters };
+  
+      // Handle JSON-based filter (if provided)
       if (filter) {
         try {
-          query = JSON.parse(filter); // Convert filter from string to object
+          query = { ...query, ...JSON.parse(filter) };
         } catch (error) {
-          throw new Error(
-            "Invalid filter format. It must be a valid JSON object."
-          );
+          throw new Error("Invalid filter format. It must be a valid JSON object.");
         }
       }
-
+  
+      // Search logic
+      if (search_data && search_fields) {
+        const fieldsArray = search_fields.split(",");
+        query["$or"] = fieldsArray.map((field) => ({
+          [field]: { $regex: search_data, $options: "i" }, // Case-insensitive search
+        }));
+      }
+  
+      console.log("Final MongoDB Query:", query);
+  
       // Select fields (projection)
       let projection = {};
       if (fields) {
         projection = fields.split(",").reduce((acc, field) => {
-          acc[field] = 1; // Include only specified fields
+          acc[field] = 1;
           return acc;
         }, {});
       }
-
-      // Fetch records with filtering, sorting, pagination, and field selection
+  
+      // Fetch records
       const allRecords = await model
         .find(query, projection)
-        .sort({ [sortBy]: order }) // Sorting
-        .skip(skip) // Pagination: Skip records
-        .limit(limit); // Pagination: Limit results
-
-      // Count total records (for pagination info)
+        .sort({ [sortBy]: order })
+        .skip(skip)
+        .limit(limit);
+  
+      // Count total records
       const totalRecords = await model.countDocuments(query);
-
-      // Return response
-
+  
       return {
         message: `${model.modelName} records fetched successfully`,
         totalRecords,
@@ -77,6 +87,7 @@ export const commanService = {
       throw new Error("Internal server error");
     }
   },
+  
 
   getCount: async (model, filter) => {
     try {

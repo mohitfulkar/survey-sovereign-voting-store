@@ -4,6 +4,8 @@ import { commanService } from "../services/commanService.js";
 
 export const getPollItems = async (req, res) => {
   try {
+ 
+    // console.log("query", query);
     const items = await commanService.getAll(Poll, req.query);
 
     res.status(200).json({

@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import AdminLayout from "../AdminLayout";
 
 const UserInfo = () => {
   return (
-    <div>UserInfo</div>
-  )
-}
+    <AdminLayout>
 
-export default UserInfo
+      <div>UserInfo</div>
+    </AdminLayout>
+  );
+};
+
+export default UserInfo;

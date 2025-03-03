@@ -102,12 +102,12 @@ const ActivePolls = () => {
             {/* Poll count based on panelist */}
             <div className="header poll-count-panelist text-center bg-blue-300 rounded-lg p-4 shadow-md">
               <label className="block mb-2 font-semibold">
-                Poll Counts by Panelist
+                No. of Poll Created by a Panelist
               </label>
               <DoughnutChart
                 labels={panelistPollData.names}
                 dataValues={panelistPollData.counts}
-                label="Poll Count"
+                label="Poll Created"
               />
             </div>
           </div>

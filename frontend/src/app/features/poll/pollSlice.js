@@ -15,8 +15,14 @@ const initialState = {
 export const getPollItems = createAsyncThunk(
   "poll/getPollItems",
   async (filters = {}) => {
-    const response = await commanService.getAll("polls", filters); // Example API
-    return response.data;
+    try {
+      const queryParams = new URLSearchParams(filters).toString(); // Convert object to URL query string
+      const response = await commanService.getAll(`polls?${queryParams}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching poll items:", error);
+      throw error;
+    }
   }
 );
 
