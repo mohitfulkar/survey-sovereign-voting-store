@@ -23,29 +23,51 @@ export const commanService = {
   getAll: async (model, queryParams = {}) => {
     try {
       console.log("Received Query Parameters:", queryParams);
-  
-      let { search_data, search_fields, sortBy, order, filter, fields, limit, page, ...filters } = queryParams;
-  
-      console.log("Extracted Parameters:", { search_data, search_fields, sortBy, order, filter, fields, limit, page, filters });
-  
+
+      let {
+        search_data,
+        search_fields,
+        sortBy,
+        order,
+        filter,
+        fields,
+        limit,
+        page,
+        ...filters
+      } = queryParams;
+
+      console.log("Extracted Parameters:", {
+        search_data,
+        search_fields,
+        sortBy,
+        order,
+        filter,
+        fields,
+        limit,
+        page,
+        filters,
+      });
+
       // Default sorting & pagination
       sortBy = sortBy || "createdAt";
       order = order === "desc" ? -1 : 1;
       limit = limit ? parseInt(limit) : 10;
       page = page ? parseInt(page) : 1;
       const skip = (page - 1) * limit;
-  
+
       let query = { ...filters };
-  
+
       // Handle JSON-based filter (if provided)
       if (filter) {
         try {
           query = { ...query, ...JSON.parse(filter) };
         } catch (error) {
-          throw new Error("Invalid filter format. It must be a valid JSON object.");
+          throw new Error(
+            "Invalid filter format. It must be a valid JSON object."
+          );
         }
       }
-  
+
       // Search logic
       if (search_data && search_fields) {
         const fieldsArray = search_fields.split(",");
@@ -53,9 +75,9 @@ export const commanService = {
           [field]: { $regex: search_data, $options: "i" }, // Case-insensitive search
         }));
       }
-  
+
       console.log("Final MongoDB Query:", query);
-  
+
       // Select fields (projection)
       let projection = {};
       if (fields) {
@@ -64,17 +86,17 @@ export const commanService = {
           return acc;
         }, {});
       }
-  
+
       // Fetch records
       const allRecords = await model
         .find(query, projection)
         .sort({ [sortBy]: order })
         .skip(skip)
         .limit(limit);
-  
+
       // Count total records
       const totalRecords = await model.countDocuments(query);
-  
+
       return {
         message: `${model.modelName} records fetched successfully`,
         totalRecords,
@@ -87,7 +109,6 @@ export const commanService = {
       throw new Error("Internal server error");
     }
   },
-  
 
   getCount: async (model, filter) => {
     try {

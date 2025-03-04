@@ -16,6 +16,29 @@ export const getPanelist = async (req, res) => {
     });
   }
 };
+export const getPanelistSummary = async (req, res) => {
+  try {
+    const result = await commanService.getAll(Panelist);
+    const item = result.data;
+    res.status(200).json({
+      message: result.message,
+      data: [
+        {
+          id: item._id,
+          fullName: item.fullName,
+          phone: item.phone,
+          email: item.email,
+          photo: item.photo,
+        },
+      ],
+    });
+  } catch (error) {
+    res.status(500).json({
+      message:
+        error.message || "An error occurred while processing the request.",
+    });
+  }
+};
 export const getPanelistById = async (req, res) => {
   try {
     const { id } = req.params;
