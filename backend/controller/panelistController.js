@@ -18,27 +18,55 @@ export const getPanelist = async (req, res) => {
 };
 export const getPanelistSummary = async (req, res) => {
   try {
-    const result = await commanService.getAll(Panelist);
-    const item = result.data;
+    const result = await commanService.getAll(Panelist, req.query);
+    const items = result?.data;
+    const filteredData = items.map((item) => ({
+      id: item._id,
+      fullName: item.fullName,
+      photo: item.photo,
+      phone: item.phone,
+      email: item.email,
+    }));
+    // Send the response
     res.status(200).json({
       message: result.message,
-      data: [
-        {
-          id: item._id,
-          fullName: item.fullName,
-          phone: item.phone,
-          email: item.email,
-          photo: item.photo,
-        },
-      ],
+      data: filteredData,
     });
   } catch (error) {
+    console.error("Error in getPanelistSummary:", error);
     res.status(500).json({
       message:
         error.message || "An error occurred while processing the request.",
     });
   }
 };
+export const getPanelistSummarybyId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await commanService.getItemById(Panelist, id);
+    console.log('result',result)
+    const item = {
+      id: result.data._id,
+      fullName: result.data.fullName,
+      photo: result.data.photo,
+      phone: result.data.phone,
+      email: result.data.email,
+    };
+
+    // Send the response
+    res.status(200).json({
+      message: result.message,
+      data: item,
+    });
+  } catch (error) {
+    console.error("Error in getPanelistSummary:", error);
+    res.status(500).json({
+      message:
+        error.message || "An error occurred while processing the request.",
+    });
+  }
+};
+
 export const getPanelistById = async (req, res) => {
   try {
     const { id } = req.params;

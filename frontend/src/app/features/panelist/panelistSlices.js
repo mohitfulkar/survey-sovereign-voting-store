@@ -6,6 +6,7 @@ import { baseUrl } from "../../../constants/env";
 const initialState = {
   panelists: [],
   panelist: null,
+  panelist_summ: null,
   loading: false,
   success: false,
   error: null,
@@ -23,6 +24,13 @@ export const getPanelistsById = createAsyncThunk(
   "panelists/getPanelistsById",
   async (id) => {
     const response = await axios.get(`${baseUrl}/panelist/${id}`);
+    return response.data;
+  }
+);
+export const getPanelistSummarybyId = createAsyncThunk(
+  "panelists/getPanelistSummarybyId",
+  async (id) => {
+    const response = await axios.get(`${baseUrl}/panelists-summary/${id}`);
     return response.data;
   }
 );
@@ -45,6 +53,7 @@ const panelistSlice = createSlice({
   extraReducers: (builder) => {
     handleAsyncAction(builder, getPanelists, "panelists");
     handleAsyncAction(builder, getPanelistsById, "panelist");
+    handleAsyncAction(builder, getPanelistSummarybyId, "panelist_summ");
     handleAsyncAction(builder, addPanelist, "panelist");
   },
 });
