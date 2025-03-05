@@ -65,6 +65,20 @@ export const updateStatus = createAsyncThunk(
     }
   }
 );
+export const updateVoteCount = createAsyncThunk(
+  "poll/updateVoteCount",
+  async ({ userId, pollId, option }, { rejectWithValue }) => {
+    try {
+      return await commanService.update(`update-vote`, userId, {
+        pollId,
+        option,
+      });
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
 let constant = [
   { method: getPollItems, variable: "pollItems" },
   { method: getPollById, variable: "pollItem" },

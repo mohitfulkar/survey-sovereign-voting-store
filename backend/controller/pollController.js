@@ -1,10 +1,10 @@
 import Poll from "../model/Poll.js";
 import "dotenv/config"; // Load environment variables from .env file
 import { commanService } from "../services/commanService.js";
+import { User } from "../model/User.js";
 
 export const getPollItems = async (req, res) => {
   try {
- 
     // console.log("query", query);
     const items = await commanService.getAll(Poll, req.query);
 
@@ -164,6 +164,71 @@ export const updateStatus = async (req, res) => {
       success: false,
       message: "Failed to update poll",
       error: error.message,
+    });
+  }
+};
+
+export const updateVoteCount = async (req, res) => {
+  try {
+    const { option,pollId } = req.body; // Option name (e.g., "yes")
+    const { userId } = req.params; // Poll ID and User ID
+
+    if (!option || !pollId || !userId) {
+      return res.status(400).json({
+        success: false,
+        message: "Poll ID, User ID, and option are required",
+      });
+    }
+
+    // Fetch the poll
+    const existingPoll = await Poll.findById(pollId);
+    if (!existingPoll) {
+      return res.status(404).json({
+        success: false,
+        message: "Poll not found",
+      });
+    }
+
+    // Fetch the user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Check if the user has already voted for this poll
+    if (user.votedPolls.includes(pollId)) {
+      return res.status(400).json({
+        success: false,
+        message: "You have already voted in this poll",
+      });
+    }
+
+    // Update the vote count for the selected option
+    const updatedOptions = existingPoll.options.map((item) =>
+      item.name === option
+        ? { ...item, voteCount: (item.voteCount || 0) + 1 }
+        : item
+    );
+
+    // Update the poll in the database
+    await Poll.findByIdAndUpdate(pollId, { options: updatedOptions });
+
+    // Add the poll ID to the user's votedPolls array
+    user.votedPolls.push(pollId);
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Vote recorded successfully",
+    });
+  } catch (error) {
+    console.error("Error updating vote count:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while updating the vote count.",
     });
   }
 };

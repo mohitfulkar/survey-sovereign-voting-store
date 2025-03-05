@@ -36,18 +36,6 @@ export const commanService = {
         ...filters
       } = queryParams;
 
-      console.log("Extracted Parameters:", {
-        search_data,
-        search_fields,
-        sortBy,
-        order,
-        filter,
-        fields,
-        limit,
-        page,
-        filters,
-      });
-
       // Default sorting & pagination
       sortBy = sortBy || "createdAt";
       order = order === "desc" ? -1 : 1;
@@ -135,7 +123,10 @@ export const commanService = {
       }
 
       // Return the found record
-      return { data: record };
+      return {
+        message: `${model.modelName} data fetched successfully`,
+        data: record,
+      };
     } catch (error) {
       console.error("Error fetching record by ID:", error);
       throw new Error("Internal server error");

@@ -72,8 +72,8 @@ const UserNavbar = ({ user_type, navbarItem }) => {
         SurveySovereign
       </Link>
       <div className="text-white space-x-12 flex">
-        {navbarItem.map((item) => (
-          <div className="flex">
+        {navbarItem.map((item, index) => (
+          <div key={index} className="flex">
             <Link to={item.route} className="flex items-center space-x-1">
               <span>{item.icon} </span>
               <label>{item.label}</label>

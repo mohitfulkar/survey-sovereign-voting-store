@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPollItems } from "../../../app/features/poll/pollSlice";
 import SearchBar from "../../../components/shared/SearchBar";
 import { debounce } from "lodash";
-import { getPanelistsById } from "../../../app/features/panelist/panelistSlices";
+import {
+  getPanelistsById,
+  getPanelistSummarybyId,
+} from "../../../app/features/panelist/panelistSlices";
 import { getPhotoUrl } from "../../../service/imageService";
 
 const VoteCount = () => {
@@ -30,7 +33,7 @@ const VoteCount = () => {
   return (
     <PanelistLayout>
       <div className="text-center">
-        <SearchBar handleChange={handleSearch} searchOn="Poll Question" />
+        <SearchBar handleSearch={handleSearch} searchOn="Poll Question" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
         {acceptedPolls.map((poll) => (
@@ -44,15 +47,16 @@ const VoteCount = () => {
 // Separate PollItem component to handle fetching panelist data for each poll
 const PollItem = ({ poll }) => {
   const dispatch = useDispatch();
-  const [panelist, setPanelist] = useState(null);
+  const [panelist, setPanelist] = useState(null); // Store specific panelist data
 
   useEffect(() => {
     const fetchPanelist = async () => {
       try {
         const response = await dispatch(
-          getPanelistsById(poll.createdBy)
+          getPanelistSummarybyId(poll.createdBy)
         ).unwrap();
-        setPanelist(response.data);
+        console.log(response.data);
+        setPanelist(response.data); // Store the specific panelist data
       } catch (error) {
         console.error("Error fetching panelist:", error);
       }
@@ -68,12 +72,12 @@ const PollItem = ({ poll }) => {
 
   return (
     <div className="p-4 bg-white shadow-lg rounded-lg border border-gray-200">
-      <div className="flex">
+      <div className="flex items-center gap-2">
         <div>
           <h3 className="text-md font-semibold mb-1">{poll.subject}</h3>
           <h3 className="text-md">{poll.pollQuestion}</h3>
         </div>
-        {panelist && (
+        {panelist && panelist.photo && (
           <img
             className="w-16 h-16 rounded-full object-cover"
             src={getPhotoUrl(panelist.photo)}
