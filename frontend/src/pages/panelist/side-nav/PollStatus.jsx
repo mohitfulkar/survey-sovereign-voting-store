@@ -15,12 +15,11 @@ const PollStatus = () => {
   const [selectedPollId, setSelectedPollId] = useState(null);
   const [actionType, setActionType] = useState(null);
   const dispatch = useDispatch();
-  const { pollItems, success } = useSelector((state) => state.poll);
+  const { pollItems } = useSelector((state) => state.poll);
   console.log("pollItems", pollItems);
   const nonRejectedPoll = pollItems.filter(
     (poll) => poll.status !== "rejected"
   );
-  console.log("nonRejectedPoll", nonRejectedPoll);
 
   useEffect(() => {
     if (!pollItems || pollItems.length === 0) {
@@ -29,7 +28,6 @@ const PollStatus = () => {
   }, [dispatch]);
 
   const handleAction = async () => {
-    console.log("actionType", actionType);
     if (
       !selectedPollId ||
       !["rejected", "accepted", "pending"].includes(actionType)

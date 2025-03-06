@@ -22,8 +22,6 @@ export const commanService = {
   },
   getAll: async (model, queryParams = {}) => {
     try {
-      console.log("Received Query Parameters:", queryParams);
-
       let {
         search_data,
         search_fields,
@@ -63,9 +61,6 @@ export const commanService = {
           [field]: { $regex: search_data, $options: "i" }, // Case-insensitive search
         }));
       }
-
-      console.log("Final MongoDB Query:", query);
-
       // Select fields (projection)
       let projection = {};
       if (fields) {
