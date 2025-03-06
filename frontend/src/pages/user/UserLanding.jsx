@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import UserNavbar from "../../components/user/UserNavbar";
 import "../../constants/style.css";
 import VoteCard from "../../components/shared/VoteCard";
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const UserLanding = () => {
   const dispatch = useDispatch();
+  const [acceptedPoll, setAcceptedPoll] = useState([]); // Fix: Initialize with an array
   const { pollItems } = useSelector((state) => state.poll);
 
   useEffect(() => {
@@ -16,6 +17,16 @@ const UserLanding = () => {
       dispatch(getPollItems());
     }
   }, [dispatch, pollItems?.length]);
+
+  // Fix: Move filtering logic inside useEffect
+  useEffect(() => {
+    if (pollItems?.length > 0) {
+      const filteredPolls = pollItems.filter(
+        (item) => item.status === "accepted"
+      );
+      setAcceptedPoll(filteredPolls);
+    }
+  }, [pollItems]);
 
   // Handle voting function
   const handleVote = (optionName, pollId) => {
@@ -28,8 +39,8 @@ const UserLanding = () => {
         <SearchBar />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
-        {pollItems.map((poll) => (
-          <VoteCard key={poll._id} poll={poll}  />
+        {acceptedPoll.map((poll) => (
+          <VoteCard key={poll._id} poll={poll} />
         ))}
       </div>
     </UserLayout>

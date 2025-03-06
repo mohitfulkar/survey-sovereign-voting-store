@@ -44,7 +44,6 @@ export const getPanelistSummarybyId = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await commanService.getItemById(Panelist, id);
-    console.log('result',result)
     const item = {
       id: result.data._id,
       fullName: result.data.fullName,

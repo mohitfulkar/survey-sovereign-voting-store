@@ -170,7 +170,7 @@ export const updateStatus = async (req, res) => {
 
 export const updateVoteCount = async (req, res) => {
   try {
-    const { option,pollId } = req.body; // Option name (e.g., "yes")
+    const { option, pollId } = req.body; // Option name (e.g., "yes")
     const { userId } = req.params; // Poll ID and User ID
 
     if (!option || !pollId || !userId) {
@@ -207,22 +207,30 @@ export const updateVoteCount = async (req, res) => {
     }
 
     // Update the vote count for the selected option
-    const updatedOptions = existingPoll.options.map((item) =>
-      item.name === option
-        ? { ...item, voteCount: (item.voteCount || 0) + 1 }
-        : item
+    const optionToUpdate = existingPoll.options.find(
+      (item) => item.name === option
     );
+    if (!optionToUpdate) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid option selected",
+      });
+    }
+    // console.log("updatedOptions", updatedOptions);
+    optionToUpdate.voteCount += 1;
 
-    // Update the poll in the database
-    await Poll.findByIdAndUpdate(pollId, { options: updatedOptions });
+    // Save the updated poll document
+    await existingPoll.save();
 
     // Add the poll ID to the user's votedPolls array
     user.votedPolls.push(pollId);
+
     await user.save();
 
     return res.status(200).json({
       success: true,
       message: "Vote recorded successfully",
+      updatedPoll: existingPoll, // Sending updated poll as response
     });
   } catch (error) {
     console.error("Error updating vote count:", error);
