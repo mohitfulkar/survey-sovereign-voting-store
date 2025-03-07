@@ -8,7 +8,7 @@ const Navbar = () => {
     <nav className="p bg-blue-600 p-5 shadow-lg flex justify-between items-center">
       {/* Logo or Brand Name */}
       <Link to="/" className="text-white text-2xl font-bold">
-        SurveySovereign
+      AWAAZ - Voices of the People
       </Link>
 
       <div className="flex space-x-5">

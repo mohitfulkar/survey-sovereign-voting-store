@@ -69,8 +69,7 @@ const UserNavbar = ({ user_type, navbarItem }) => {
         }
         className="text-white text-2xl font-bold"
       >
-        SurveySovereign
-      </Link>
+ AWAAZ - Voices of the People      </Link>
       <div className="text-white space-x-12 flex">
         {navbarItem.map((item, index) => (
           <div key={index} className="flex">

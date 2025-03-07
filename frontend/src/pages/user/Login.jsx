@@ -5,12 +5,11 @@ import { commonClasses } from "../../constants/styleClass";
 import { login } from "../../app/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { tokenService } from "../../service/tokenService";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {  success, error, token } = useSelector((state) => state.auth);
+  const { success, error, token } = useSelector((state) => state.auth);
   const initialFormState = loginFields.reduce((acc, field) => {
     acc[field.name] = "";
     return acc;
@@ -28,11 +27,9 @@ const Login = () => {
   useEffect(() => {
     if (success) {
       toast.success("User Login Successfully!");
-      if (token) {
-        localStorage.setItem("token", token);
-      }
-      const userId = tokenService.extractItems(token).id;
-      navigate(`/user/${userId}`);
+      // Removed the token-related logic
+      // No token storage or extraction from tokenService
+      navigate(`/user/${token?.id}`);
     }
     if (error) {
       toast.error("Something went wrong");
