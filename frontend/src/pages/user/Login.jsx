@@ -27,9 +27,11 @@ const Login = () => {
   useEffect(() => {
     if (success) {
       toast.success("User Login Successfully!");
-      // Removed the token-related logic
-      // No token storage or extraction from tokenService
-      navigate(`/user/${token?.id}`);
+      if (token) {
+        localStorage.setItem("token", token);
+        const userId = tokenService.extractItems(token).id;
+        navigate(`/user/${userId}`);
+      }
     }
     if (error) {
       toast.error("Something went wrong");

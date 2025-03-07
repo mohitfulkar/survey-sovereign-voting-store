@@ -13,7 +13,6 @@ const UserNavbar = ({ user_type, navbarItem }) => {
 
   const { user } = useSelector((state) => state.user || {});
   const { panelist } = useSelector((state) => state.panelist || {});
-  console.log("panelist", panelist);
   const [isDataAvailable, setIsDataAvailable] = useState(false);
 
   let fullName = "Guest";

@@ -23,7 +23,6 @@ const VoteCard = ({ poll }) => {
       pollId: selectedPoll,
       option: selectedOption,
     };
-    console.log("payload", payload);
     try {
       await dispatch(updateVoteCount(payload)).unwrap();
       dispatch(getPollItems());
