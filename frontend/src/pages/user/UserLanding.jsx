@@ -28,11 +28,6 @@ const UserLanding = () => {
     }
   }, [pollItems]);
 
-  // Handle voting function
-  const handleVote = (optionName, pollId) => {
-    console.log(`Voted for ${optionName} in poll ${pollId}`);
-  };
-
   return (
     <UserLayout>
       <div className="text-center">
