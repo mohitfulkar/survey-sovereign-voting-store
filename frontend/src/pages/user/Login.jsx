@@ -10,7 +10,7 @@ import { tokenService } from "../../service/tokenService";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {  success, error, token } = useSelector((state) => state.auth);
+  const { success, error, token } = useSelector((state) => state.auth);
   const initialFormState = loginFields.reduce((acc, field) => {
     acc[field.name] = "";
     return acc;
@@ -30,9 +30,9 @@ const Login = () => {
       toast.success("User Login Successfully!");
       if (token) {
         localStorage.setItem("token", token);
+        const userId = tokenService.extractItems(token).id;
+        navigate(`/user/${userId}`);
       }
-      const userId = tokenService.extractItems(token).id;
-      navigate(`/user/${userId}`);
     }
     if (error) {
       toast.error("Something went wrong");
