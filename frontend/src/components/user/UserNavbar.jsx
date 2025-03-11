@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../app/features/user/userSlices.js";
 import { getPanelistsById } from "../../app/features/panelist/panelistSlices.js";
 import "../../constants/style.css";
+import Logo from "../../assets/logo.png";
 
 const UserNavbar = ({ user_type, navbarItem }) => {
   const dispatch = useDispatch();
@@ -43,10 +44,14 @@ const UserNavbar = ({ user_type, navbarItem }) => {
     fullName = "Admin";
   }
 
+  // Truncate name to 10 characters and add "..."
+  const truncatedName =
+    fullName.length > 10 ? `${fullName.substring(0, 10)}...` : fullName;
+
   const handleLogout = () => {
     switch (user_type) {
       case "user":
-        localStorage.getItem("token");
+        localStorage.removeItem("token");
         break;
       case "panelist":
         localStorage.removeItem("panelist_token");
@@ -56,7 +61,7 @@ const UserNavbar = ({ user_type, navbarItem }) => {
   };
 
   return (
-    <div className="p bg-blue-600 p-5 shadow-lg flex justify-between items-center">
+    <div className="p bg-blue-100 p-5 shadow-lg flex justify-between items-center">
       {/* Logo or Brand Name */}
       <Link
         to={
@@ -66,10 +71,12 @@ const UserNavbar = ({ user_type, navbarItem }) => {
             ? `/panelist/${id}`
             : "/admin"
         }
-        className="text-white text-2xl font-bold"
+        className="w-12"
       >
- AWAAZ - Voices of the People      </Link>
-      <div className="text-white space-x-12 flex">
+        <img src={Logo} alt="Logo" />
+      </Link>
+
+      <div className="space-x-12 flex">
         {navbarItem.map((item, index) => (
           <div key={index} className="flex">
             <Link to={item.route} className="flex items-center space-x-1">
@@ -79,8 +86,16 @@ const UserNavbar = ({ user_type, navbarItem }) => {
           </div>
         ))}
       </div>
+
       <div className="flex items-center space-x-4">
-        <span className="text-white font-medium">{`Hi, ${fullName}`}</span>
+        {/* Tooltip to show full name on hover (appears below the name) */}
+        <div className="relative group">
+          <span className="font-medium cursor-pointer">{`Hi, ${truncatedName}`}</span>
+          <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-1 bg-gray-800 text-white text-xs rounded-lg px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+            {fullName}
+          </div>
+        </div>
+
         <button
           onClick={handleLogout}
           className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"

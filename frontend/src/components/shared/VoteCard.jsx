@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../../constants/style.css";
 import Modal from "./Modal";
 import {
@@ -7,12 +7,14 @@ import {
   getPollItems,
 } from "../../app/features/poll/pollSlice";
 import { useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const VoteCard = ({ poll }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedPoll, setSelectedPoll] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const { id } = useParams();
+  const { success } = useSelector((state) => state.poll);
 
   const dispatch = useDispatch();
 
@@ -24,11 +26,12 @@ const VoteCard = ({ poll }) => {
       option: selectedOption,
     };
     try {
-      await dispatch(updateVoteCount(payload)).unwrap();
+      const response = await dispatch(updateVoteCount(payload)).unwrap();
       dispatch(getPollItems());
+
       setIsVisible(false);
     } catch (error) {
-      console.error("Error updating poll:", error);
+      toast.error(error);
     }
   };
 

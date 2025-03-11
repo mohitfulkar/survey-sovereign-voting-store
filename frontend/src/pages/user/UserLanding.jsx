@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import UserNavbar from "../../components/user/UserNavbar";
 import "../../constants/style.css";
 import VoteCard from "../../components/shared/VoteCard";
 import UserLayout from "./UserLayout";

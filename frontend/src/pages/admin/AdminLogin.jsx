@@ -12,7 +12,7 @@ const AdminLogin = () => {
   const secret_key = import.meta.env.VITE_ADMIN_SECRET;
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.secret_key === secret_key) {
+    if (formData.secret_key === secret_key) { 
       navigate("/admin");
       toast.success("Admin Login Successful");
     } else {

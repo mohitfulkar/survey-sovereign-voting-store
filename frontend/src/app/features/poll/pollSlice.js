@@ -74,7 +74,7 @@ export const updateVoteCount = createAsyncThunk(
         option,
       });
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Something went wrong");
+      return rejectWithValue(error.message || "Something went wrong");
     }
   }
 );
