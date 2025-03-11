@@ -4,6 +4,7 @@ import "./constants/style.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
+import PanelistHistory from "./pages/user/side-nav/PanelistHistory";
 
 // Lazy Load Components
 const SignUp = lazy(() => import("./pages/user/SignUp"));
@@ -58,9 +59,7 @@ const App = () => {
         )}
 
         {/* Suspense Wrapper for Lazy Loading */}
-        <Suspense
-          fallback={<div className="text-center mt-10">Loading...</div>}
-        >
+        <Suspense>
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
@@ -71,15 +70,19 @@ const App = () => {
             <Route path="/panelist/:id/create-poll" element={<CreatePoll />} />
             <Route path="/panelist/:id/poll-status" element={<PollStatus />} />
             <Route path="/panelist/:id/vote-count" element={<VoteCount />} />
-            <Route path="/admin/user-info" element={<UserInfo />} />
             <Route path="/add-panelist" element={<AddPanelist />} />
             <Route path="/panelist-history" element={<ActivePanelist />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLanding />} />
             <Route path="/admin/poll-info" element={<ActivePolls />} />
+            <Route path="/admin/user-info" element={<UserInfo />} />
             <Route
               path="/panelist/:id/add-panelist"
               element={<AddByPanelist />}
+            />
+            <Route
+              path="/user/panelist-history"
+              element={<PanelistHistory />}
             />
           </Routes>
         </Suspense>

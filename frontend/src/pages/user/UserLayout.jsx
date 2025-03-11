@@ -9,7 +9,7 @@ const UserLayout = ({ children }) => {
     {
       label: "Panelists",
       icon: <FaRegNewspaper />,
-      route: "/panelists",
+      route: "/user/panelist-history",
     },
     {
       label: "News",

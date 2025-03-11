@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PanelistLayout from "../PanelistLayout";
 import { MdPublish, MdDeleteOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { debounce } from "lodash"; // Import lodash debounce
+import { debounce } from "lodash";
 
 import {
   getPollItems,
@@ -10,13 +10,19 @@ import {
 } from "../../../app/features/poll/pollSlice";
 import Modal from "../../../components/shared/Modal";
 import SearchBar from "../../../components/shared/SearchBar";
+import { getPhotoUrl } from "../../../service/imageService";
+import { getPanelistSummarybyId } from "../../../app/features/panelist/panelistSlices";
+
 const PollStatus = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedPollId, setSelectedPollId] = useState(null);
   const [actionType, setActionType] = useState(null);
+  const [panelist, setPanelist] = useState(null);
+  const [poll, setPoll] = useState(null);
+
   const dispatch = useDispatch();
   const { pollItems } = useSelector((state) => state.poll);
-  console.log("pollItems", pollItems);
+
   const nonRejectedPoll = pollItems.filter(
     (poll) => poll.status !== "rejected"
   );
@@ -25,7 +31,7 @@ const PollStatus = () => {
     if (!pollItems || pollItems.length === 0) {
       dispatch(getPollItems());
     }
-  }, [dispatch]);
+  }, [dispatch, pollItems.length]);
 
   const handleAction = async () => {
     if (
@@ -37,8 +43,8 @@ const PollStatus = () => {
     try {
       await dispatch(
         updateStatus({ id: selectedPollId, status: actionType })
-      ).unwrap(); // Wait for action to complete
-      dispatch(getPollItems()); // Fetch updated data after success
+      ).unwrap();
+      dispatch(getPollItems());
     } catch (error) {
       console.error("Error updating poll:", error);
     }
@@ -93,9 +99,10 @@ const PollStatus = () => {
                 <td className="px-4 py-2">{item.pollQuestion}</td>
                 <td className="px-4 py-2">{item.created_by_name}</td>
                 <td className="px-4 py-2">
-                  {item.status !== "accepted" ? (
+                  {item.status !== "accepted" && (
                     <button
                       onClick={() => {
+                        setPoll(item);
                         setSelectedPollId(item._id);
                         setIsVisible(true);
                         setActionType("accepted");
@@ -104,11 +111,10 @@ const PollStatus = () => {
                     >
                       <MdPublish />
                     </button>
-                  ) : (
-                    ""
                   )}
                   <button
                     onClick={() => {
+                      setPoll(item);
                       setSelectedPollId(item._id);
                       setIsVisible(true);
                       setActionType("rejected");
