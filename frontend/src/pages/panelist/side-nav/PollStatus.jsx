@@ -10,14 +10,11 @@ import {
 } from "../../../app/features/poll/pollSlice";
 import Modal from "../../../components/shared/Modal";
 import SearchBar from "../../../components/shared/SearchBar";
-import { getPhotoUrl } from "../../../service/imageService";
-import { getPanelistSummarybyId } from "../../../app/features/panelist/panelistSlices";
 
 const PollStatus = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedPollId, setSelectedPollId] = useState(null);
   const [actionType, setActionType] = useState(null);
-  const [panelist, setPanelist] = useState(null);
   const [poll, setPoll] = useState(null);
 
   const dispatch = useDispatch();

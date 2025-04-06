@@ -1,11 +1,17 @@
-import { Outlet } from "react-router-dom"; // Import Outlet for nested routes
+import { Outlet, useParams } from "react-router-dom"; // Import Outlet for nested routes
 import UserNavbar from "../../components/user/UserNavbar";
 import { FaRegNewspaper } from "react-icons/fa";
 import { MdOutlineFeedback } from "react-icons/md";
 import { RiBloggerLine } from "react-icons/ri";
 
 const UserLayout = ({ children }) => {
+  const { id } = useParams();
   const menuItems = [
+    {
+      label: "Home",
+      icon: <FaRegNewspaper />,
+      route: `/user/${id}`,
+    },
     {
       label: "Panelists",
       icon: <FaRegNewspaper />,
@@ -16,11 +22,7 @@ const UserLayout = ({ children }) => {
       icon: <FaRegNewspaper />,
       route: "/news",
     },
-    {
-      label: "Feedback",
-      icon: <MdOutlineFeedback />,
-      route: "/feedback",
-    },
+
     {
       label: "Blogs",
       icon: <RiBloggerLine />,

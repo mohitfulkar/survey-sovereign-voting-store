@@ -9,7 +9,6 @@ import {
   updateVoteCount,
 } from "../controller/pollController.js";
 const router = express.Router();
-
 router.get("/polls", getPollItems);
 router.get("/poll-detail/:id", getPollById);
 router.get("/poll-count", getPollCount);
