@@ -12,7 +12,7 @@ const PanelistLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { loading, success, error, token } = useSelector((state) => state.auth);
+  const { success, error, token } = useSelector((state) => state.auth);
   const { panelists } = useSelector((state) => state.panelist);
 
   const fullName = panelists?.data?.map((item) => item.fullName) || [];
@@ -31,20 +31,39 @@ const PanelistLogin = () => {
   };
 
   useEffect(() => {
+    const storedToken = localStorage.getItem("panelist_token");
+    if (storedToken) {
+      const panelistId = tokenService.extractItems(storedToken)?.id;
+      if (panelistId) {
+        navigate(`/panelist/${panelistId}`, { replace: true });
+      }
+    }
+  }, [navigate]);
+  useEffect(() => {
     if (success && token) {
-      const panelistId = tokenService.extractItems(token).id;
+      const extractedData = tokenService.extractItems(token);
+      const panelistId = extractedData?.id || null;
 
-      if (!TOKEN.PANELIST) {
+      if (!panelistId) {
+        toast.error("Invalid panelist data. Please try again.");
+        return;
+      }
+
+      // Store token safely
+      if (!localStorage.getItem("panelist_token")) {
+        console.log("Storing panelist token...");
         localStorage.setItem("panelist_token", token);
       }
 
       toast.success("Login successful!");
-      navigate(`/panelist/${panelistId}`);
+      navigate(`/panelist/${panelistId}`, { replace: true });
     }
 
     if (error) {
-      toast.error(error.message || "Login failed"); // Display error message
-      console.log("Error Status:", error.status || "No status received"); // Extract status code
+      const errorMessage =
+        typeof error === "string" ? error : error.message || "Login failed";
+      toast.error(errorMessage);
+      console.error("Error Details:", error);
     }
   }, [success, token, error, navigate]);
 

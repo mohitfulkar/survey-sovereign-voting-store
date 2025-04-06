@@ -1,5 +1,10 @@
 import React, { Suspense, lazy } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./constants/style.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,6 +32,18 @@ const AddByPanelist = lazy(() =>
   import("./pages/panelist/side-nav/AddByPanelist")
 );
 const UserInfo = lazy(() => import("./pages/admin/side-nav/UserInfo"));
+
+// Private Route for User
+const PrivateUserRoute = ({ element }) => {
+  const token = localStorage.getItem("token");
+  return token ? element : <Navigate to="/login" replace />;
+};
+
+// Private Route for Panelist
+const PrivatePanelistRoute = ({ element }) => {
+  const panelistToken = localStorage.getItem("panelist_token");
+  return panelistToken ? element : <Navigate to="/panelist/login" replace />;
+};
 
 const App = () => {
   const { loading: authLoading } = useSelector((state) => state.auth);
@@ -59,31 +76,53 @@ const App = () => {
         )}
 
         {/* Suspense Wrapper for Lazy Loading */}
-        <Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<SignUp />} />
-            <Route path="/user/:id" element={<UserLanding />} />
             <Route path="/panelist/login" element={<PanelistLogin />} />
-            <Route path="/panelist/:id" element={<PanelistLanding />} />
-            <Route path="/panelist/:id/create-poll" element={<CreatePoll />} />
-            <Route path="/panelist/:id/poll-status" element={<PollStatus />} />
-            <Route path="/panelist/:id/vote-count" element={<VoteCount />} />
-            <Route path="/add-panelist" element={<AddPanelist />} />
-            <Route path="/panelist-history" element={<ActivePanelist />} />
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminLanding />} />
-            <Route path="/admin/poll-info" element={<ActivePolls />} />
-            <Route path="/admin/user-info" element={<UserInfo />} />
+
+            {/* Private User Routes */}
             <Route
-              path="/panelist/:id/add-panelist"
-              element={<AddByPanelist />}
+              path="/user/:id"
+              element={<PrivateUserRoute element={<UserLanding />} />}
             />
             <Route
               path="/user/panelist-history"
-              element={<PanelistHistory />}
+              element={<PrivateUserRoute element={<PanelistHistory />} />}
             />
+
+            {/* Private Panelist Routes */}
+            <Route
+              path="/panelist/:id"
+              element={<PrivatePanelistRoute element={<PanelistLanding />} />}
+            />
+            <Route
+              path="/panelist/:id/create-poll"
+              element={<PrivatePanelistRoute element={<CreatePoll />} />}
+            />
+            <Route
+              path="/panelist/:id/poll-status"
+              element={<PrivatePanelistRoute element={<PollStatus />} />}
+            />
+            <Route
+              path="/panelist/:id/vote-count"
+              element={<PrivatePanelistRoute element={<VoteCount />} />}
+            />
+            <Route
+              path="/panelist/:id/add-panelist"
+              element={<PrivatePanelistRoute element={<AddByPanelist />} />}
+            />
+
+            {/* Admin Routes */}
+            <Route path="/add-panelist" element={<AddPanelist />} />
+            <Route path="/panelist-history" element={<ActivePanelist />} />
+            <Route path="/admin" element={<AdminLanding />} />
+            <Route path="/admin/poll-info" element={<ActivePolls />} />
+            <Route path="/admin/user-info" element={<UserInfo />} />
           </Routes>
         </Suspense>
       </Router>
