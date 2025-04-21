@@ -1,4 +1,4 @@
-export const baseUrl = "https://survey-sovereign-voting-store.onrender.com";
+export const baseUrl = "http://localhost:3000";
 
 export const TOKEN = {
   PANELIST: localStorage.getItem("panelist_token"),
