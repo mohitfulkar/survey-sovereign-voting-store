@@ -90,8 +90,11 @@ export const addPanelist = async (req, res) => {
       photo,
     };
     const total = await Panelist.countDocuments();
-    if (total === 3)
-      res.status(400).json({ message: "Cannot Add more than 3 panelist" });
+    if (total === 3) {
+      return res
+        .status(400)
+        .json({ message: "Cannot add more than 3 panelists" });
+    }
 
     const result = await commanService.create(Panelist, payload);
     res.status(201).json({ message: result.message, data: result.data });

@@ -3,7 +3,7 @@ import { panelistLoginFields } from "../../constants/form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPanelists } from "../../app/features/panelist/panelistSlices";
-import { panelistLogin } from "../../app/features/auth/authSlice";
+import { panelistLogin, resetAuth } from "../../app/features/auth/authSlice";
 import { TOKEN } from "../../constants/env.js";
 import { tokenService } from "../../service/tokenService.js";
 import { toast } from "react-toastify";
@@ -36,6 +36,7 @@ const PanelistLogin = () => {
       const panelistId = tokenService.extractItems(storedToken)?.id;
       if (panelistId) {
         navigate(`/panelist/${panelistId}`, { replace: true });
+        dispatch(resetAuth());
       }
     }
   }, [navigate]);
