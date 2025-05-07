@@ -6,6 +6,7 @@ import { getUserById } from "../../app/features/user/userSlices.js";
 import { getPanelistsById } from "../../app/features/panelist/panelistSlices.js";
 import "../../constants/style.css";
 import Logo from "../../assets/logo.png";
+import { resetAuth } from "../../app/features/auth/authSlice.js";
 
 const UserNavbar = ({ user_type, navbarItem }) => {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ const UserNavbar = ({ user_type, navbarItem }) => {
         localStorage.removeItem("panelist_token");
         break;
     }
+    dispatch(resetAuth());
     navigate("/");
   };
 

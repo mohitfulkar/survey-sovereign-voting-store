@@ -22,20 +22,17 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login(formData));
-    if (success) {
-      toast.success("User Login Successfully!");
-      if (token) {
-        localStorage.setItem("token", token);
-        const userId = tokenService.extractItems(token).id;
-        navigate(`/user/${userId}`);
-      }
-    }
+    dispatch(login(formData)); // just dispatch here
   };
 
   useEffect(() => {
-  
-  }, [success, error, navigate]);
+    if (success && token) {
+      toast.success("User Login Successfully!");
+      localStorage.setItem("token", token);
+      const userId = tokenService.extractItems(token).id;
+      navigate(`/user/${userId}`);
+    }
+  }, [success, token, navigate]);
 
   const renderFormField = (field) => {
     return (

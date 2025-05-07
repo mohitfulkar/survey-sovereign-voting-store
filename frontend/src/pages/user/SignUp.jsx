@@ -5,7 +5,7 @@ import { registerFields } from "../../constants/form.js";
 import { commonClasses } from "../../constants/styleClass.js";
 import { baseUrl } from "../../constants/env.js";
 import { toast } from "react-toastify";
-import { register } from "../../app/features/auth/authSlice.js";
+import { register, resetAuth } from "../../app/features/auth/authSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 
 const SignUp = () => {
@@ -31,6 +31,7 @@ const SignUp = () => {
     if (success) {
       toast.success("Registration successful!");
       navigate("/login");
+      dispatch(resetAuth());
     }
     if (error) {
       toast.error("Something went wrong");
