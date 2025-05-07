@@ -1,8 +1,6 @@
 import { Outlet, useParams } from "react-router-dom"; // Import Outlet for nested routes
 import UserNavbar from "../../components/user/UserNavbar";
 import { FaHome, FaRegNewspaper } from "react-icons/fa";
-import { MdOutlineFeedback } from "react-icons/md";
-import { RiBloggerLine } from "react-icons/ri";
 
 const UserLayout = ({ children }) => {
   const { id } = useParams();
