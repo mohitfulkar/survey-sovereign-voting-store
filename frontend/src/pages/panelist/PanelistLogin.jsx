@@ -7,6 +7,7 @@ import { panelistLogin, resetAuth } from "../../app/features/auth/authSlice";
 import { TOKEN } from "../../constants/env.js";
 import { tokenService } from "../../service/tokenService.js";
 import { toast } from "react-toastify";
+import Navbar from "../../components/Navbar.jsx";
 
 const PanelistLogin = () => {
   const navigate = useNavigate();
@@ -113,24 +114,27 @@ const PanelistLogin = () => {
     );
   };
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl mb-6 text-center font-semibold">
-          Panlist Login
-        </h2>
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-lg">
+          <h2 className="text-2xl mb-6 text-center font-semibold">
+            Panlist Login
+          </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {panelistLoginFields.map(renderFormField)}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {panelistLoginFields.map(renderFormField)}
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300"
-          >
-            Login
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300"
+            >
+              Login
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
